@@ -27,6 +27,11 @@ class CreateContract extends Component
     public $landlord_name;
     public $land_location;
     public $tenant_name;
+    public $location;
+    public $trade_license;
+    public $nationality;
+    public $ejari;
+
 
 
 
@@ -47,9 +52,23 @@ class CreateContract extends Component
         $this->open = false;
         $this->resetValidation();
         $this->reset([
-            "buildings", "floors", "apartments", "tenant_id",
-            "start_date", "duration", "apartment_id", 
-            "building_id", "floor_no", "landlord_name", "land_location", "tenant_name",
+            "buildings",
+            "floors",
+            "apartments",
+            "tenant_id",
+            "start_date",
+            "duration",
+            "apartment_id",
+            "building_id",
+            "floor_no",
+            "landlord_name",
+            "land_location",
+            "tenant_name",
+            "location",
+            "trade_license",
+            "nationality",
+            "ejari",
+            "contact_no",
         ]);
     }
 
@@ -85,6 +104,12 @@ class CreateContract extends Component
             'landlord_name' => 'nullable|string|max:255',
             'land_location' => 'nullable|string|max:255',
             "tenant_name" => "nullable|string|max:255",
+            "location" => "nullable|string|max:255",
+            "trade_license" => "nullable|string|max:255",
+            "nationality" => "nullable|string|max:255",
+            "eid_no" => "nullable|string|max:255",
+            "ejari" => "nullable|string|max:255",
+            "contact_no" => "nullable|string|max:15",
         ]);
 
         Contract::create([
@@ -97,6 +122,13 @@ class CreateContract extends Component
             "landlord_name" => $this->landlord_name,
             "land_location" => $this->land_location,
             "tenant_name" => $this->tenant_name,
+            "location" => $this->location,
+            "trade_license" => $this->trade_license,
+            "nationality" => $this->nationality,
+            "eid_no" => $this->eid_no,
+            "ejari" => $this->ejari,
+            "contact_no" => $this->contact_no,
+            
         ]);
 
         $this->closeModal();

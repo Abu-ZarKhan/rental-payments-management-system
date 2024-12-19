@@ -72,8 +72,8 @@
                                 @enderror
                             </div>
                             <div class="form-group w-1/2">
-                                <label for="tradeLicense">Trade License</label>
-                                <input type="text" id="tradeLicense" wire:model="tradeLicense"
+                                <label for="trade-license">Trade License</label>
+                                <input type="text" id="trade-license" wire:model="trade-license"
                                     class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
                                 @error('tradeLicense')
                                 <span class="text-danger">{{ $message }}</span>
@@ -90,8 +90,8 @@
                                 @enderror
                             </div>
                             <div class="form-group w-1/2">
-                                <label for="eidNo">EID No</label>
-                                <input type="text" id="eidNo" wire:model="eidNo" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                <label for="eid_no">EID No</label>
+                                <input type="text" id="eid_no" wire:model="eid_no" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
                                 @error('eidNo')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

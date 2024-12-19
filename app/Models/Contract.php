@@ -23,6 +23,11 @@ class Contract extends Model
         'landlord_name',
         'land_location',
         'tenant_name',
+        'location',
+        'trade_license',
+        'nationality',
+        'eid_no',
+        'contact_no',
     ];
 
     protected $hidden = ['updated_at'];
