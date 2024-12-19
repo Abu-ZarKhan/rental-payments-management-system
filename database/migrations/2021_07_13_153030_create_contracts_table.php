@@ -15,6 +15,8 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
+
+            $table->string('company') ->nullable();
             $table->date('start_date');
             $table->decimal('duration');
             $table->integer('rent_amount');

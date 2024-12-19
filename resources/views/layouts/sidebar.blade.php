@@ -1,144 +1,121 @@
 <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
     <div class="flex flex-col h-full">
         <!-- Brand -->
-        <a
-            href="{{ route('admin.dashboard') }}"
-            class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light py-4 mx-auto"
-            >
-            {{ LaravelLocalization::getCurrentLocale() == 'ar' ? config('app.name_ar') : config('app.name') }}
+        <a href="{{ route('admin.dashboard') }}"
+            class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light py-4 mx-auto">
+            <img class="w-16" src="{{ asset('images/xavier-logo.png') }}"
+                alt="{{ LaravelLocalization::getCurrentLocale() == 'ar' ? 'اسم المشروع' : 'Rental Dues' }}"
+                class="text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
+
         </a>
         <!-- Sidebar links -->
         <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <!-- Dashboards links -->
             <div x-data="{ isActive: {{ pageActive('admin.dashboard') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.dashboard') }}"
+                <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-home"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Dashboard') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Dashboard') }}</span>
                 </a>
             </div>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.tenants') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.tenants.index') }}"
+                <a href="{{ route('admin.tenants.index') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-house-user"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Tenants') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Tenants') }}</span>
                 </a>
             </div>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.buildings') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.buildings.index') }}"
+                <a href="{{ route('admin.buildings.index') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-home"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Buildings') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Buildings') }}</span>
                 </a>
             </div>
 
             <hr>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.due-categories') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.due-categories.index') }}"
+                <a href="{{ route('admin.due-categories.index') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-boxes"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Due Categories') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Due Categories') }}</span>
                 </a>
             </div>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.nationalities') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.nationalities.index') }}"
+                <a href="{{ route('admin.nationalities.index') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-flag"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Nationalities') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Nationalities') }}</span>
                 </a>
             </div>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.users') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.users.index') }}"
+                <a href="{{ route('admin.users.index') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-users"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Users') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Users') }}</span>
                 </a>
             </div>
 
             <hr>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.activity-log') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.activity-log') }}"
+                <a href="{{ route('admin.activity-log') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-clipboard-list"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Activity Log') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Activity Log') }}</span>
                 </a>
             </div>
 
             <div x-data="{ isActive: {{ pageTabActive('admin.settings.application') ? 'true' : 'false' }} }">
-                <a
-                    href="{{ route('admin.settings.application') }}"
+                <a href="{{ route('admin.settings.application') }}"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="isActive ? 'true' : 'false'"
-                    >
+                    :class="{ 'bg-primary-100 dark:bg-primary': isActive }" role="button" aria-haspopup="true"
+                    :aria-expanded="isActive ? 'true' : 'false'">
                     <span aria-hidden="true">
                         <i class="fas fa-globe"></i>
                     </span>
-                    <span class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Application Settings') }}</span>
+                    <span
+                        class="{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? 'ml-2' : 'mr-2' }} text-sm">{{ __('app.Application Settings') }}</span>
                 </a>
             </div>
 

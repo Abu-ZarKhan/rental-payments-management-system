@@ -1,7 +1,15 @@
 <?php
 
 return [
+    "Trade License"=>"Trade License",
     "Add" => "Add",
+    "Location" => "Location",
+    "Landlord Location" => "Landlord Location",
+    "Company Name" => "Company Name",
+    "Landlord Name" => "Landlord Name",
+    "EID No" => "EID No",
+    "Ejari" => "Ejari",
+    "Contact No" => "Contact No",
     "Search" => "Search...",
     "Actions" => "Actions",
     "Nothing found" => "Nothing found",

@@ -96,7 +96,14 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
+                                <div class="form-group w-1/2">
+                                    <label for="contractStart">Contract Start</label>
+                                    <input type="text" id="contractStart" wire:model="contractStart"
+                                        class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                    @error('contractStart')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="row flex gap-4">
                                 <div class="form-group w-1/2">
@@ -111,17 +118,13 @@
                                     @enderror
                                 </div>
                                 <div class="form-group w-1/2">
-                                    <div>
-                                        <label for="contactNo">Contact No</label>
-                                    </div>
-                                    <input type="tel" id="contactNo" wire:model="contactNo"
-                                        class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md"
-                                        >
+                                    <div> <label for="contactNo">Contact No</label></div>
+                                    <input type="text" id="contactNo" wire:model="contactNo"
+                                        class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
                                     @error('contactNo')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="form-group w-1/2">
                                     <label for="rent_amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                         {{ __('app.Rent Amount') }}

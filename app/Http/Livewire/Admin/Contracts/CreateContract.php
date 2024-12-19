@@ -16,6 +16,7 @@ class CreateContract extends Component
     public $apartments = [];
 
     public $tenant_id;
+    public $company;
     public $start_date;
     public $duration;
     public $rent_amount;
@@ -66,6 +67,7 @@ class CreateContract extends Component
         $this->validate([
             "start_date" => "required|date",
             "duration" => "required|max:50|numeric",
+            "company" => 'nullable|string|max:255', // Add this validation
             "rent_amount" => "required|numeric",
             "building_id" => "required|integer|exists:buildings,id",
             "floor_no" => "required|integer",
@@ -79,6 +81,7 @@ class CreateContract extends Component
             "rent_amount" => $this->rent_amount,
             "apartment_id" => $this->apartment_id,
             "tenant_id" => $this->tenant_id,
+            "company" => $this->company, // Include this field
         ]);
 
         $this->closeModal();
