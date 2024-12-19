@@ -24,6 +24,7 @@ class CreateContract extends Component
     public $building_id;
     public $floor_no;
     public $apartment_id;
+    public $landlord_name;
 
     protected $listeners = [
         'openCreateContractModal' => 'openModal',
@@ -33,9 +34,7 @@ class CreateContract extends Component
     public function openModal($tenant_id)
     {
         $this->tenant_id = $tenant_id;
-
         $this->buildings = Building::all();
-
         $this->open = true;
     }
 
@@ -43,7 +42,11 @@ class CreateContract extends Component
     {
         $this->open = false;
         $this->resetValidation();
-        $this->reset(["buildings", "floors", "apartments", "tenant_id", "start_date", "duration", "apartment_id", "building_id", "floor_no",]);
+        $this->reset([
+            "buildings", "floors", "apartments", "tenant_id",
+            "start_date", "duration", "apartment_id", 
+            "building_id", "floor_no", "landlord_name",
+        ]);
     }
 
     public function updatedBuildingId()
@@ -59,7 +62,9 @@ class CreateContract extends Component
     public function updatedFloorNo()
     {
         $this->apartment_id = null;
-        $this->apartments = Apartment::where('building_id', $this->building_id)->where('floor', $this->floor_no)->get();
+        $this->apartments = Apartment::where('building_id', $this->building_id)
+            ->where('floor', $this->floor_no)
+            ->get();
     }
 
     public function storeDue()
@@ -67,21 +72,23 @@ class CreateContract extends Component
         $this->validate([
             "start_date" => "required|date",
             "duration" => "required|max:50|numeric",
-            "company" => 'nullable|string|max:255', // Add this validation
+            "company" => 'nullable|string|max:255',
             "rent_amount" => "required|numeric",
             "building_id" => "required|integer|exists:buildings,id",
             "floor_no" => "required|integer",
             "apartment_id" => "required|integer|exists:apartments,id",
             "tenant_id" => "required|integer|exists:tenants,id",
+            'landlord_name' => 'nullable|string|max:255',
         ]);
 
-        $contract = Contract::create([
+        Contract::create([
             "start_date" => $this->start_date,
             "duration" => $this->duration,
             "rent_amount" => $this->rent_amount,
             "apartment_id" => $this->apartment_id,
             "tenant_id" => $this->tenant_id,
-            "company" => $this->company, // Include this field
+            "company" => $this->company,
+            "landlord_name" => $this->landlord_name,
         ]);
 
         $this->closeModal();

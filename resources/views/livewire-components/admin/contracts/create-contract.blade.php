@@ -38,10 +38,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group w-1/2">
-                                    <label for="landlordName" class="block">Landlord Name</label>
-                                    <input type="text" id="landlordName" wire:model="landlordName"
+                                    <label for="landlord_name" class="block">Landlord Name</label>
+                                    <input type="text" id="landlordName" wire:model="landlord_name"
                                         class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
-                                    @error('landlordName')
+                                    @error('landlord_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
