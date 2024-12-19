@@ -23,6 +23,8 @@ class CreateContractsTable extends Migration
             $table->unsignedBigInteger('apartment_id')->nullable();
             $table->unsignedBigInteger('tenant_id');
             $table->timestamps();
+            $table->string('landlord_name') ->nullable();
+            $table->string('land_location') ->nullable();
 
             $table->foreign('apartment_id')->references('id')->on('apartments')->nullOnDelete();
             $table->foreign('tenant_id')->references('id')->on('tenants')->cascadeOnDelete();

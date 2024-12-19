@@ -25,6 +25,10 @@ class CreateContract extends Component
     public $floor_no;
     public $apartment_id;
     public $landlord_name;
+    public $land_location;
+    public $tenant_name;
+
+
 
     protected $listeners = [
         'openCreateContractModal' => 'openModal',
@@ -45,7 +49,7 @@ class CreateContract extends Component
         $this->reset([
             "buildings", "floors", "apartments", "tenant_id",
             "start_date", "duration", "apartment_id", 
-            "building_id", "floor_no", "landlord_name",
+            "building_id", "floor_no", "landlord_name", "land_location", "tenant_name",
         ]);
     }
 
@@ -79,6 +83,8 @@ class CreateContract extends Component
             "apartment_id" => "required|integer|exists:apartments,id",
             "tenant_id" => "required|integer|exists:tenants,id",
             'landlord_name' => 'nullable|string|max:255',
+            'land_location' => 'nullable|string|max:255',
+            "tenant_name" => "nullable|string|max:255",
         ]);
 
         Contract::create([
@@ -89,6 +95,8 @@ class CreateContract extends Component
             "tenant_id" => $this->tenant_id,
             "company" => $this->company,
             "landlord_name" => $this->landlord_name,
+            "land_location" => $this->land_location,
+            "tenant_name" => $this->tenant_name,
         ]);
 
         $this->closeModal();

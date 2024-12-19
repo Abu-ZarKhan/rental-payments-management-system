@@ -20,6 +20,9 @@ class Contract extends Model
         'rent_amount',
         'apartment_id',
         'tenant_id',
+        'landlord_name',
+        'land_location',
+        'tenant_name',
     ];
 
     protected $hidden = ['updated_at'];
