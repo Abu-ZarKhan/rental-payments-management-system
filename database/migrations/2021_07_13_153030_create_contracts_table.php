@@ -29,7 +29,7 @@ class CreateContractsTable extends Migration
             $table->string('trade_license')->nullable();
             $table->string('nationality')->nullable();
             $table->string('eid_no')->nullable();
-            $table->string('ejari')->nullable();
+            $table->integer('ejari');
             $table->string('contact_no')->nullable();
 
             $table->foreign('apartment_id')->references('id')->on('apartments')->nullOnDelete();
