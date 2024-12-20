@@ -17,6 +17,12 @@
                         onclick="deleteContract()">
                         <i class="fas fa-trash"></i>
                     </button>
+                    <button
+                    class="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
+                    onclick="downloadContract({{ $contract->id }})">
+                    <i class="fas fa-download"></i>
+                    </button>
+
                 </div>
             </div>
             <div>
@@ -35,9 +41,9 @@
                         <p class="text-gray-600 font-bold">
                             {{ __('app.Trade License') }}
                         </p>
-                        <p>
-                            <a class="hover:underline"
-                                href="{{ route('admin.tenants.show', $contract->tenant->id) }}">{{ $contract->tenant->name }}</a>
+                        <p> {{ $contract->trade_license }}
+                            <!-- <a class="hover:underline"
+                                href="{{ route('admin.tenants.show', $contract->tenant->id) }}">{{ $contract->tenant->name }}</a> -->
                         </p>
                     </div>
 
@@ -74,7 +80,7 @@
                             {{ __('app.Location') }}
                         </p>
                         <p>
-                            {{ $contract->end_date }}
+                            {{ $contract->location }}
                         </p>
 
                     </div>
@@ -83,7 +89,7 @@
                             {{ __('app.Landlord Location') }}
                         </p>
                         <p>
-                            {{ $contract->duration . ' ' . __('app.years') }}
+                            {{ $contract->land_location}}
                         </p>
                     </div>
 
@@ -95,7 +101,7 @@
                             {{ __('app.Company Name') }}
                         </p>
                         <p>
-                            {{ $contract->end_date }}
+                            {{ $contract->company }}
                         </p>
 
                     </div>
@@ -104,7 +110,7 @@
                             {{ __('app.Landlord Name') }}
                         </p>
                         <p>
-                            {{ $contract->duration . ' ' . __('app.years') }}
+                            {{ $contract->landlord_name }}
                         </p>
 
 
@@ -114,16 +120,16 @@
                     class= "row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
                     <div class="  flex w-1/2 px-3 justify-between">
                         <p class="text-gray-600 font-bold">
-                            {{ __('app.Trade License') }}
+                            {{ __('app.Nationality') }}
                         </p>
                         <p>
-                            {{ $contract->end_date }}
+                            {{ $contract->nationality }}
                         </p>
 
                     </div>
                     <div class="  flex w-1/2 px-3 justify-between">
                         <p class="text-gray-600 font-bold">
-                            {{ __('app.Nationality') }}
+                            {{ __('app.Duration') }}
                         </p>
                         <p>
                             {{ $contract->duration . ' ' . __('app.years') }}
@@ -131,6 +137,7 @@
 
 
                     </div>
+                    
                 </div>
                 <div
                     class= "row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
@@ -139,7 +146,7 @@
                             {{ __('app.EID No') }}
                         </p>
                         <p>
-                            {{ $contract->end_date }}
+                            {{ $contract->eid_no }}
                         </p>
 
                     </div>
@@ -161,7 +168,7 @@
                             {{ __('app.Contact No') }}
                         </p>
                         <p>
-                            {{ $contract->end_date }}
+                            {{ $contract->contact_no }}
                         </p>
 
                     </div>
@@ -186,16 +193,7 @@
                         </p>
 
                     </div>
-                    <div class="  flex w-1/2 px-3 justify-between">
-                        <p class="text-gray-600 font-bold">
-                            {{ __('app.Duration') }}
-                        </p>
-                        <p>
-                            {{ $contract->duration . ' ' . __('app.years') }}
-                        </p>
-
-
-                    </div>
+                    
                 </div>
 
                 <div
