@@ -31,7 +31,6 @@ class CreateContractsTable extends Migration
             $table->string('eid_no')->nullable();
             $table->string('ejari')->nullable();
             $table->string('contact_no')->nullable();
-            $table->string('contact_no')->nullable();
 
             $table->foreign('apartment_id')->references('id')->on('apartments')->nullOnDelete();
             $table->foreign('tenant_id')->references('id')->on('tenants')->cascadeOnDelete();

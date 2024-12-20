@@ -6,23 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 class AddEjariToContractsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('contracts', function (Blueprint $table) {
-            $table->string('ejari')->nullable()->after('eid_no'); // Add the column
+            $table->enum('ejari', ['Yes', 'No'])->nullable()->after('eid_no');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('contracts', function (Blueprint $table) {

@@ -31,6 +31,8 @@ class CreateContract extends Component
     public $trade_license;
     public $nationality;
     public $ejari;
+    public $eid_no;
+    public $contact_no;
 
 
 
@@ -108,8 +110,8 @@ class CreateContract extends Component
             "trade_license" => "nullable|string|max:255",
             "nationality" => "nullable|string|max:255",
             "eid_no" => "nullable|string|max:255",
-            "ejari" => "nullable|string|max:255",
-            "contact_no" => "nullable|string|max:15",
+            "ejari" => "nullable|in:Yes,No",
+            "contact_no" => "nullable|string|max:15 ",
         ]);
 
         Contract::create([
