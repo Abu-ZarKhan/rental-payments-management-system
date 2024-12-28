@@ -116,28 +116,7 @@
 
                         </div>
                         <div class="row flex gap-4">
-<<<<<<< Updated upstream
                             
-=======
-                            <div class="form-group w-1/2">
-
-                                <div>
-                                    <label for="ejari">Ejari</label>
-                                </div>
-                                <select
-                                    id="ejari"
-                                    wire:model="ejari"
-                                    class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
-                                    <option value="">Select Option</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                                @error('ejari')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
->>>>>>> Stashed changes
                                 <div class="form-group w-1/2">
                                     <div>
                                         <label for="contact_no">Contact No</label>
