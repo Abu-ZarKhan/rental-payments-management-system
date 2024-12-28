@@ -12,6 +12,15 @@ use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DueCategoryController;
 use App\Http\Controllers\Admin\NationalityController;
 
+// added for download
+use App\Http\Controllers\ContractDownloadController;
+
+// Add this route OUTSIDE the localized group
+Route::get('/contract-download/{id}', ContractDownloadController::class)
+    ->name('contracts.download')
+    ->middleware(['auth']);
+// added for download
+
 Route::view('/', 'frontend.home')->name('home');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -29,7 +38,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     });
 
     Route::get('contracts/{contract}', [ContractController::class, 'show'])->name('contracts.show');
-
+    
     Route::get('dues/{due}', [DueController::class, 'show'])->name('dues.show');
 
     Route::group(["prefix" => "users", "as" => "users.",], function () {

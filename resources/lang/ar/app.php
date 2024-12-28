@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // "Tenant Name"=> ""
     "Add" => "إضافة",
     "Search" => "البحث...",
     "Actions" => "الإجراءات",

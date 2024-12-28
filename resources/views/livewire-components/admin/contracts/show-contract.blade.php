@@ -18,10 +18,10 @@
                         <i class="fas fa-trash"></i>
                     </button>
                     <button
-                    class="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
-                    onclick="downloadContract({{ $contract->id }})">
-                    <i class="fas fa-download"></i>
-                    </button>
+    class="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
+    onclick="downloadContract({{ $contract->id }})">
+    <i class="fas fa-download"></i>
+</button>
 
                 </div>
             </div>
@@ -155,7 +155,7 @@
                             {{ __('app.Ejari') }}
                         </p>
                         <p>
-                            {{ $contract->duration . ' ' . __('app.years') }}
+                            {{ $contract->ejari }}
                         </p>
 
 
@@ -286,6 +286,7 @@
                                     onclick="deleteAttachment('{{ $attachment }}')">
                                     <i class="fas fa-trash"></i>
                                 </button>
+                                
                             </div>
                         </div>
                     </div>
@@ -342,4 +343,122 @@
             };
         </script>
     @endpush
+
+    
+    <!-- script for download contract -->
+    @push('scripts')
+    <script>
+        // Your existing deleteContract function...
+
+        // const downloadContract = (id) => {
+        //     // Show loading state
+        //     Swal.fire({
+        //         title: "{{ __('app.Generating document...') }}",
+        //         text: "{{ __('app.Please wait') }}",
+        //         allowOutsideClick: false,
+        //         allowEscapeKey: false,
+        //         allowEnterKey: false,
+        //         didOpen: () => {
+        //             Swal.showLoading();
+        //         }
+        //     });
+
+        //     // Make the request to download
+        //     fetch(`/contracts/download/${id}`)
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.blob();
+        //         })
+        //         .then(blob => {
+        //             // Create download link
+        //             const url = window.URL.createObjectURL(blob);
+        //             const a = document.createElement('a');
+        //             a.href = url;
+        //             a.download = `Contract_${id}.docx`;
+        //             document.body.appendChild(a);
+        //             a.click();
+        //             window.URL.revokeObjectURL(url);
+                    
+        //             // Close loading dialog
+        //             Swal.close();
+                    
+        //             // Show success message
+        //             Swal.fire({
+        //                 icon: 'success',
+        //                 title: "{{ __('app.Success') }}",
+        //                 text: "{{ __('app.Document has been generated successfully') }}",
+        //                 timer: 2000,
+        //                 showConfirmButton: false
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Error:', error);
+        //             Swal.fire({
+        //                 icon: 'error',
+        //                 title: "{{ __('app.Error') }}",
+        //                 text: "{{ __('app.Something went wrong while generating the document') }}"
+        //             });
+        //         });
+        // };
+        const downloadContract = (id) => {
+    Swal.fire({
+        title: "{{ __('app.Generating document...') }}",
+        text: "{{ __('app.Please wait') }}",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    // Open in new window to handle download
+    window.open(`/contract-download/${id}`, '_blank');
+    
+    // Close loading and show success
+    setTimeout(() => {
+        Swal.close();
+        Swal.fire({
+            icon: 'success',
+            title: "{{ __('app.Success') }}",
+            text: "{{ __('app.Document has been generated successfully') }}",
+            timer: 2000,
+            showConfirmButton: false
+        });
+    }, 1500);
+};
+    </script>
+@endpush
+<script>
+    const downloadContract = (id) => {
+        Swal.fire({
+            title: "{{ __('app.Generating document...') }}",
+            text: "{{ __('app.Please wait') }}",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Make the request to download
+        window.location.href = `/contract-download/${id}`;
+        
+        // Close loading after a short delay
+        setTimeout(() => {
+            Swal.close();
+            // Show success message
+            Swal.fire({
+                icon: 'success',
+                title: "{{ __('app.Success') }}",
+                text: "{{ __('app.Document has been generated successfully') }}",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }, 2000);
+    };
+</script>
 </div>

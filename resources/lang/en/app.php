@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "Tenant Name"=>"Tenant Name",
     "Trade License"=>"Trade License",
     "Add" => "Add",
     "Location" => "Location",
