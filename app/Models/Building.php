@@ -21,6 +21,14 @@ class Building extends Model
         'staff_workstations',
         'staff_chairs',
         'cabinet',
+        'conference_room',
+        'sofa',
+        'cleaning',
+        'parking',
+        'drinking_water',
+        'electricity',
+        'internet',
+        'refreshment_tea_coffee',
     ];
 
     public $translatable = ['address'];

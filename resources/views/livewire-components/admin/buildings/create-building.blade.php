@@ -110,10 +110,10 @@
                             @error("cabinet") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div style="width:150px;">
-                            <label for="confrence_room" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            <label for="conference_room" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Conference Room') }}
                             </label>
-                            <input style="width:100px;" id="confrence_room" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="conference_room" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="conference_room">
                             @error("Conference Room  ") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                              <div style="width:150px;">
@@ -130,27 +130,27 @@
                             <label for="cleaning" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Cleaning') }}
                             </label>
-                            <input style="width:100px;" id="staff_chairs" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="staff_chairs">
+                            <input style="width:100px;" id="cleaning" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cleaning">
                             @error("cleaning") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div style="width:150px;">
                             <label for="parking" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Parking(Inside Card)') }}
                             </label>
-                            <input style="width:100px;" id="cabinet" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="parking" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="parking">
                             @error("Parking") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div><div style="width:150px;">
-                            <label for="drinking water" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            <label for="drinking_water" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Drinking water') }}
                             </label>
-                            <input style="width:100px;" id="cabinet" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="drinking_water" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="drinking_water">
                             @error("Drinking water") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div style="width:150px;">
-                            <label for="cabinet" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
-                                {{ __('app.Electicity') }}
+                            <label for="electricity" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                                {{ __('app.Electricity') }}
                             </label>
-                            <input style="width:100px;" id="cabinet" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="cabinet" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="electricity">
                             @error("electicity") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                            
@@ -158,17 +158,17 @@
                         </div> 
                         <div class="flex  mb-4 justify-start">
                             <div style="width:150px;">
-                            <label for="Internet" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            <label for="internet" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Internet') }}
                             </label>
-                            <input style="width:100px;" id="staff_chairs" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="staff_chairs">
+                            <input style="width:100px;" id="internet" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="internet">
                             @error("Internet") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div style="width:150px;">
-                            <label for="Refreshment Tea Coffee" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            <label for="refreshment_tea_coffee" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Refreshment Tea Coffee') }}
                             </label>
-                            <input style="width:100px;" id="cabinet" type="number" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="refreshment_tea_coffee" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="refreshment_tea_coffee">
                             @error("Refreshment Tea Coffee") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                            
