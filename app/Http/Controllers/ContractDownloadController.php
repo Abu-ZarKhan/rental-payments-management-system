@@ -77,12 +77,32 @@ class ContractDownloadController extends Controller
             $this->addTableRowWithBottomBorder($contractTable, 'Nationality:', $contract->nationality, 'EID No:', $contract->eid_no);
             $this->addTableRowWithBottomBorder($contractTable, 'Contract Start:', $contract->start_date, 'Contract End:', $contract->end_date);
             $this->addTableRowWithBottomBorder($contractTable, 'Ejari:', $contract->ejari, 'Contact No:', $contract->contact_no);
-                        // Add the new section with title and table
+            // Add the new section with title and table
             $cell->addText("Building Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
             // $phpWord->addTableStyle('ContractTable2', $tableStyle);
             $contractTable2 = $cell->addTable('contractTable2');
             $this->addTableRowWithBottomBorder($contractTable2, 'Address:', $contract->apartment->building->address, 'Building Number:', $contract->apartment->building->number);
             $this->addTableRowWithBottomBorder($contractTable2, 'Floor:', $contract->apartment->floor, 'Apartment:', $contract->apartment->number);
+            // Add a new section with title and table for Additional Information
+$cell->addText("Additional Information", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+
+
+
+            // Add a new table for the signature section
+            $signatureTable = $cell->addTable();
+
+            // Add a row for signatures
+            $signatureTable->addRow();
+
+            // Left cell: Tenant signature
+            $tenantCell = $signatureTable->addCell(5000);
+            $tenantCell->addText("Tenant Signature / Stamp", ['bold' => true, 'size' => 10], ['alignment' => 'center']);
+            $tenantCell->addText("-----------------------", [], ['alignment' => 'center',]);
+
+            // Right cell: Landlord signature
+            $landlordCell = $signatureTable->addCell(5000);
+            $landlordCell->addText("Landlord Signature / Stamp", ['bold' => true, 'size' => 10], ['alignment' => 'center']);
+            $landlordCell->addText("-----------------------", [], ['alignment' => 'center',]);
 
             // Set filename and save
             $fileName = 'Contract_' . $contract->id . '_' . time() . '.docx';

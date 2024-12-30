@@ -1,6 +1,20 @@
 <?php
 
 return [
+    "Executive Table"=>"Executive Table",
+    "Executive Chair"=>"Executive Chair",
+    "Sofa"=>"Sofa",
+    "Internet"=>"Internet",
+    "Refreshment Tea Coffee"=>"Refreshment Tea Coffee",
+    "Conference Room"=>"Conference Room",
+    "Guest Chair"=>"Guest Chair",
+    "Cleaning"=>"Cleaning",
+    "Drinking water"=>"Drinking water",
+    "Electicity"=>"Electicity",
+    "Parking(Inside Card)"=>"Parking(Inside Card)",
+    "Staff Workstations"=>"Staff Workstations",
+    "Staff Chairs - LB"=>"Staff Chairs - LB",
+    "Cabinet"=>"Cabinet",
     "Tenant Name"=>"Tenant Name",
     "Trade License"=>"Trade License",
     "Add" => "Add",
