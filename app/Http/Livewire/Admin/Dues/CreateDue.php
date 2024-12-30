@@ -20,6 +20,7 @@ class CreateDue extends Component
     public $paid_amount;
     public $discount;
     public $note;
+    public $payment_method; 
 
     protected $listeners = [
         'openCreateDueModal' => 'openModal',
@@ -42,6 +43,7 @@ class CreateDue extends Component
         $this->amount = 0.00;
         $this->paid_amount = 0.00;
         $this->discount = 0.00;
+        $this->payment_method = ''; 
         $this->open = true;
     }
 
@@ -49,7 +51,7 @@ class CreateDue extends Component
     {
         $this->open = false;
         $this->resetValidation();
-        $this->reset(["amount", "paid_amount", "discount", "note", "due_category_id", "tenant_id",]);
+        $this->reset(["amount", "paid_amount", "discount", "note", "due_category_id", "tenant_id","payment_method" ]);
     }
 
     public function storeDue()
@@ -61,6 +63,8 @@ class CreateDue extends Component
             "note.*" => "nullable|max:255|string",
             "due_category_id" => "required|integer|exists:due_categories,id",
             "tenant_id" => "required|integer|exists:tenants,id",
+            "payment_method" => "required|in:online,cash,cheque",  // Add validation rule
+
         ]);
 
         Due::create([
@@ -73,6 +77,8 @@ class CreateDue extends Component
             ],
             "due_category_id" => $this->due_category_id,
             "tenant_id" => $this->tenant_id,
+            "payment_method" => $this->payment_method,  // Add to creation array
+
         ]);
 
         $this->closeModal();

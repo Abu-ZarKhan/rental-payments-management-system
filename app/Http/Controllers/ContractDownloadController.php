@@ -65,8 +65,8 @@ class ContractDownloadController extends Controller
             );
             
             // Add title
-            $cell->addText("Tel: +971 50 172 5600, +971 50 924 5979, +971 50 924 5979 , Email: management@xavier.ae,", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
-            $cell->addText("Address: ibne battuta gate building near ibne battuta mall  metro station  ,", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
+            $cell->addText("Tel: +971 50 172 5600, +971 50 924 5979, +971 50 924 5979 , Email: management@xavier.ae,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left']);
+            $cell->addText("Address: ibne battuta gate building near ibne battuta mall  metro station  ,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left']);
             $cell->addText("OFFICE LEASE CONTRACT", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
 
             // Add contract details table
@@ -84,8 +84,41 @@ class ContractDownloadController extends Controller
             $this->addTableRowWithBottomBorder($contractTable2, 'Address:', $contract->apartment->building->address, 'Building Number:', $contract->apartment->building->number);
             $this->addTableRowWithBottomBorder($contractTable2, 'Floor:', $contract->apartment->floor, 'Apartment:', $contract->apartment->number);
             // Add a new section with title and table for Additional Information
-$cell->addText("Additional Information", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
 
+            // Create a new table for Paid Dues information
+           // Add a new section with title and table for Paid Dues
+$cell->addText("Payment Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+
+// Create a new table for Paid Dues with the same style
+$paymentTable = $cell->addTable('PaymentTable');
+
+// Add header row with the same styling
+// $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Amount', 'Note');
+
+// // Populate the table with Paid Dues
+// foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
+//     $this->addTableRowWithBottomBorder(
+//         $paymentTable,
+//         formatDate($paidDue->created_at), // Date
+//         formatCurrency($paidDue->paid_amount), // Amount
+//         $paidDue->note ?: '-', // Note or dash if empty
+        
+//     );
+// }
+$paymentTable = $cell->addTable('PaymentTable');
+
+// Add header row
+$this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Amount', 'Note');
+
+// Populate the table with Paid Dues
+foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
+    $this->addTableRowWithBottomBorder(
+        $paymentTable,
+        formatDate($paidDue->created_at),
+        formatCurrency($paidDue->paid_amount),
+        $paidDue->note ?: '-'
+    );
+}
 
 
             // Add a new table for the signature section
@@ -130,29 +163,63 @@ $cell->addText("Additional Information", ['bold' => true, 'size' => 14], ['align
             $table->addCell(2500)->addText($value2);
         }
     }
-    private function addTableRowWithBottomBorder($table, $label1, $value1, $label2 = null, $value2 = null)
-{
-    $table->addRow();
+//     private function addTableRowWithBottomBorder($table, $label1, $value1, $label2 = null, $value2 = null)
+// {
+//     $table->addRow();
 
-    // Define cell style with a bottom border
-    $cellStyle = ['borderBottomSize' => 6, 'borderBottomColor' => '000000' ,'height'=> 300];
+//     // Define cell style with a bottom border
+//     $cellStyle = ['borderBottomSize' => 6, 'borderBottomColor' => '000000' ,'height'=> 300];
     
-    $labelStyle = ['bold' => true, 'size' => 10];  // Set your desired font size for label
-    $valueStyle = ['size' => 9 ,'bold'=> true];
-    // Add the first label and value cells
-    $cell1 = $table->addCell(2500, $cellStyle);
-    $cell1->addText($label1,$labelStyle);
+//     $labelStyle = ['bold' => true, 'size' => 10];  // Set your desired font size for label
+//     $valueStyle = ['size' => 9 ,'bold'=> true];
+//     // Add the first label and value cells
+//     $cell1 = $table->addCell(2500, $cellStyle);
+//     $cell1->addText($label1,$labelStyle);
     
-    $cell2 = $table->addCell(2500, $cellStyle);
-    $cell2->addText($value1,$valueStyle);
+//     $cell2 = $table->addCell(2500, $cellStyle);
+//     $cell2->addText($value1,$valueStyle);
 
-    // Add second label and value pair if provided
-    if ($label2 && $value2) {
-        $cell3 = $table->addCell(2500, $cellStyle);
-        $cell3->addText($label2, $labelStyle);
+//     // Add second label and value pair if provided
+//     if ($label2 && $value2) {
+//         $cell3 = $table->addCell(2500, $cellStyle);
+//         $cell3->addText($label2, $labelStyle);
         
-        $cell4 = $table->addCell(2500, $cellStyle);
-        $cell4->addText($value2 ,$valueStyle);
+//         $cell4 = $table->addCell(2500, $cellStyle);
+//         $cell4->addText($value2 ,$valueStyle);
+//     }
+// }
+private function addTableRowWithBottomBorder($table, ...$params)
+    {
+        $table->addRow();
+        $cellStyle = ['borderBottomSize' => 6, 'borderBottomColor' => '000000', 'height' => 300];
+        $labelStyle = ['bold' => true, 'size' => 10];
+        $valueStyle = ['size' => 9, 'bold' => true];
+
+        if (count($params) === 3) {
+            // Handle case for 3 parameters (Date, Amount, Note)
+            $cell1 = $table->addCell(2500, $cellStyle);
+            $cell1->addText($params[0], $labelStyle);
+            
+            $cell2 = $table->addCell(2500, $cellStyle);
+            $cell2->addText($params[1], $valueStyle);
+            
+            $cell3 = $table->addCell(5000, $cellStyle); // Make the note column wider
+            $cell3->addText($params[2], $valueStyle);
+        } else {
+            // Handle case for 4 parameters (label1, value1, label2, value2)
+            $cell1 = $table->addCell(2500, $cellStyle);
+            $cell1->addText($params[0], $labelStyle);
+            
+            $cell2 = $table->addCell(2500, $cellStyle);
+            $cell2->addText($params[1], $valueStyle);
+
+            if (isset($params[2]) && isset($params[3])) {
+                $cell3 = $table->addCell(2500, $cellStyle);
+                $cell3->addText($params[2], $labelStyle);
+                
+                $cell4 = $table->addCell(2500, $cellStyle);
+                $cell4->addText($params[3], $valueStyle);
+            }
+        }
     }
-}
 }

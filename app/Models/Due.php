@@ -21,6 +21,7 @@ class Due extends Model
         'note',
         'due_category_id',
         'tenant_id',
+        'payment_method',
     ];
 
     protected $hidden = ['updated_at'];

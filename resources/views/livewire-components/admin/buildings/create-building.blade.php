@@ -124,9 +124,7 @@
                             @error("sofa") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                         <hr>
-                         <hr>
-                         <hr>
+                        
                          <div class="flex  mb-4 justify-between">
                             <div style="width:150px;">
                             <label for="cleaning" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
