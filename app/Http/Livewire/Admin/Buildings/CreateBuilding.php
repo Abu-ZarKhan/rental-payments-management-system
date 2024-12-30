@@ -15,6 +15,7 @@ class CreateBuilding extends Component
     public $floors;
     public $apartments_on_floor;
     public $basement = false;
+    public $executive_table;
 
     protected $listeners = [
         'openCreateBuildingModal' => 'openModal',
@@ -23,6 +24,7 @@ class CreateBuilding extends Component
 
     protected $rules = [
         'address' => 'required|array',
+        'executive_table' => 'nullable|string|max:255',
     ];
 
     public function openModal()
@@ -34,7 +36,7 @@ class CreateBuilding extends Component
     {
         $this->open = false;
         $this->resetValidation();
-        $this->reset(["address", "number", "floors", "apartments_on_floor", "basement",]);
+        $this->reset(["address", "number", "floors", "apartments_on_floor", "basement","executive_table",]);
     }
 
     public function storeBuilding()
@@ -54,6 +56,7 @@ class CreateBuilding extends Component
                 'ar' => $this->address['ar'] ?? $this->address['en'],
             ],
             "number" => $this->number,
+            "executive_table" => $this->executive_table,
         ]);
 
         $apartments = [];
