@@ -16,6 +16,7 @@ class Building extends Model
         'address',
         'number',
         'executive_table',
+        'executive_chair',
     ];
 
     public $translatable = ['address'];
