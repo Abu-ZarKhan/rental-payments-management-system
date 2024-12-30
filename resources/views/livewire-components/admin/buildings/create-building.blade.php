@@ -110,10 +110,10 @@
                             @error("cabinet") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div style="width:150px;">
-                            <label for="confrence room" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            <label for="confrence_room" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 {{ __('app.Conference Room') }}
                             </label>
-                            <input style="width:100px;" id="cabinet" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
+                            <input style="width:100px;" id="confrence_room" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="cabinet">
                             @error("Conference Room  ") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                              <div style="width:150px;">

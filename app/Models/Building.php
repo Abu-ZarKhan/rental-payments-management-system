@@ -17,6 +17,10 @@ class Building extends Model
         'number',
         'executive_table',
         'executive_chair',
+        'guest_chair',
+        'staff_workstations',
+        'staff_chairs',
+        'cabinet',
     ];
 
     public $translatable = ['address'];
