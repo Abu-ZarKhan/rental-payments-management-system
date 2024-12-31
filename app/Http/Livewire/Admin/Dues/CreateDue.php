@@ -9,6 +9,8 @@ use Livewire\Component;
 
 class CreateDue extends Component
 {
+    // public $amount = 0;
+    // public $discount = 0;
     public $open = false;
 
     public $tenants;

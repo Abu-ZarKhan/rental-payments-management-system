@@ -32,7 +32,7 @@
                             @error("tenant_id") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                         <div class="flex  mb-4 " style="justify-content:space-between !important">
-                            <div class="w-40">
+                            <!-- <div class="w-40">
                                 <label for="amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                     {{ __('app.Amount') }}
                                     <span class="text-red-600 ml-1 font-bold">*</span>
@@ -47,8 +47,27 @@
                             </label>
                             <input id="discount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="discount">
                             @error("discount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
-                            </div>
-                            
+                            </div> -->
+                            <div class="w-40">
+        <label for="amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+            {{ __('app.Amount') }}
+            <span class="text-red-600 ml-1 font-bold">*</span>
+        </label>
+        <input id="amount" type="number" min="0.01" step="0.01" 
+               class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" 
+               oninput="calculateVAT()">
+        @error("amount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+    </div>
+    <div class="w-40">
+        <label for="discount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+            {{ __('app.Discount') }}
+            <span class="text-red-600 ml-1 font-bold">*</span>
+        </label>
+        <input id="discount" type="number" min="0.01" step="0.01" 
+               class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" 
+               oninput="calculateVAT()">
+        @error("discount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+    </div>
                         </div>
                         
                         <div class="flex  mb-4 items-center	" style="justify-content:space-between !important" >
@@ -103,14 +122,14 @@
                             <label for="actual-office-rent" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Actual Office Rent
                             </label>
-                            <input id="actual-office-rent" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="actualOfficeRent">
+                            <input id="actual-office-rent" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="actualOfficeRent">
                             @error("actualOfficeRent") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                         <div class="w-40">
                             <label for="admin-fee" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Admin Fee
                             </label>
-                            <input id="admin-fee" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="adminFee">
+                            <input id="admin-fee" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="adminFee">
                             @error("adminFee") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -121,15 +140,22 @@
                             <label for="security-deposit" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Security Deposit
                             </label>
-                            <input id="security-deposit" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="securityDeposit">
+                            <input id="security-deposit" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="securityDeposit">
                             @error("securityDeposit") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
-                        <div class="w-40">
+                        <!-- <div class="w-40">
                             <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 VAT 5%
                             </label>
                             <input id="vat" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="vat">
                             @error("vat") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div> -->
+                        <div class="w-40">
+                            <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                                VAT 5%
+                            </label>
+                            <input id="vat" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" 
+                                readonly>
                         </div>
                     </div>
 
@@ -139,14 +165,14 @@
                             <label for="parking-card-fee" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Parking Card Fee
                             </label>
-                            <input id="parking-card-fee" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="parkingCardFee">
+                            <input id="parking-card-fee" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="parkingCardFee">
                             @error("parkingCardFee") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                         <div class="w-40">
                             <label for="commission" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Commission
                             </label>
-                            <input id="commission" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="commission">
+                            <input id="commission" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="commission">
                             @error("commission") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -157,7 +183,7 @@
                             <label for="ejari" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                 Ejari
                             </label>
-                            <input id="ejari" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="ejari">
+                            <input id="ejari" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="ejari">
                             @error("ejari") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -194,3 +220,12 @@
 
     @endif
 </div>
+<script>
+    function calculateVAT() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const discount = parseFloat(document.getElementById('discount').value) || 0;
+        const vat = ((amount - discount) * 0.05).toFixed(0);
+
+        document.getElementById('vat').value = vat > 0 ? vat : 0;
+    }
+</script>
