@@ -151,7 +151,7 @@
                                 {{ __('app.Electricity') }}
                             </label>
                             <input style="width:100px;" id="cabinet" type="text" min="0" step="1" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="electricity">
-                            @error("electicity") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                            @error("elecricity") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                            
                             

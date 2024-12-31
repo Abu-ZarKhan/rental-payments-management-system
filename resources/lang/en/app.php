@@ -16,7 +16,7 @@ return [
     "Guest Chair"=>"Guest Chair",
     "Cleaning"=>"Cleaning",
     "Drinking water"=>"Drinking water",
-    "Electicity"=>"Electicity",
+    "Electricity"=>"Electricity",
     "Parking(Inside Card)"=>"Parking(Inside Card)",
     "Staff Workstations"=>"Staff Workstations",
     "Staff Chairs - LB"=>"Staff Chairs - LB",
