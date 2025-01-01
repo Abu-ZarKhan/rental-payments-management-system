@@ -34,30 +34,12 @@
                             @error("tenant_id") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
                         <div class="flex  mb-4 " style="justify-content:space-between !important">
-                            <!-- <div class="w-40">
-                                <label for="amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
-                                    {{ __('app.Amount') }}
-                                    <span class="text-red-600 ml-1 font-bold">*</span>
-                                </label>
-                                <input id="amount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="amount">
-                                @error("amount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-40">
-                            <label for="discount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
-                                {{ __('app.Discount') }}
-                                <span class="text-red-600 ml-1 font-bold">*</span>
-                            </label>
-                            <input id="discount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="discount">
-                            @error("discount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
-                            </div> -->
                             <div class="w-40">
                                 <label for="amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                     {{ __('app.Amount') }}
                                     <span class="text-red-600 ml-1 font-bold">*</span>
                                 </label>
-                                <input id="amount" type="number" min="0.01" step="0.01"
-                                    class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md"
-                                    oninput="calculateVAT()">
+                                <input id="amount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="amount" oninput="calculateVAT()">
                                 @error("amount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div class="w-40">
@@ -65,9 +47,7 @@
                                     {{ __('app.Discount') }}
                                     <span class="text-red-600 ml-1 font-bold">*</span>
                                 </label>
-                                <input id="discount" type="number" min="0.01" step="0.01"
-                                    class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md"
-                                    oninput="calculateVAT()">
+                                <input id="discount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="discount" oninput="calculateVAT()">
                                 @error("discount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -78,7 +58,7 @@
                                     {{ __('app.Paid Amount') }}
                                     <span class="text-red-600 ml-1 font-bold">*</span>
                                 </label>
-                                <input id="paid_amount" type="number" min="0.01" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="paid_amount">
+                                <input id="paid_amount" type="number" min="1" step="0.01" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="paid_amount">
                                 @error("paid_amount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div class="flex flex-col">
@@ -147,21 +127,13 @@
                                 <input id="security_deposit" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="security_deposit">
                                 @error("securityDeposit") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                             </div>
-                            <!-- <div class="w-40">
-                            <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
-                                VAT 5%
-                            </label>
-                            <input id="vat" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="vat">
-                            @error("vat") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
-                        </div> -->
                             <div class="w-40">
                                 <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                                     VAT 5%
                                 </label>
-                                <input id="vat" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" readonly>
+                                <input id="vat" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" readonly value="{{ $vat }}">
                             </div>
                         </div>
-
                         <div class="flex mb-4" style="justify-content:space-between !important">
                             <!-- Pair 3: Parking Card Fee and Commission -->
                             <div class="w-40">
@@ -232,3 +204,37 @@
         document.getElementById('vat').value = vat > 0 ? vat : 0;
     }
 </script>
+<!-- <div class="w-40">
+        <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+            VAT 5%
+        </label>
+        <input id="vat" type="text" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" wire:model.defer="vat">
+        @error("vat") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+    </div> -->
+<!-- <div class="w-40">
+            <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                VAT 5%
+            </label>
+            <input id="vat" type="number" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md" readonly>
+        </div>
+    </div> -->
+<!-- <div class="w-40">
+        <label for="amount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                {{ __('app.Amount') }}
+                <span class="text-red-600 ml-1 font-bold">*</span>
+            </label>
+            <input id="amount" type="number" min="1" step="0.01"
+                class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md"
+                oninput="calculateVAT()">
+            @error("amount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+        </div>
+        <div class="w-40">
+            <label for="discount" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                {{ __('app.Discount') }}
+                <span class="text-red-600 ml-1 font-bold">*</span>
+            </label>
+            <input id="discount" type="number" min="1" step="0.01"
+                class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md"
+                oninput="calculateVAT()">
+            @error("discount") <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+        </div> -->

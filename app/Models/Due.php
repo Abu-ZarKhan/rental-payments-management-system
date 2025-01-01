@@ -22,6 +22,13 @@ class Due extends Model
         'due_category_id',
         'tenant_id',
         'payment_method',
+        'actual_office_rent',
+        'admin_fee',
+        'security_deposit',
+        'parking_card_fee',
+        'commission',
+        'ejari',
+        'vat',
     ];
 
     protected $hidden = ['updated_at'];
@@ -68,7 +75,7 @@ class Due extends Model
 
     public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value * 100;
+        $this->attributes['amount'] = $value;
     }
 
     public function getPaidAmountAttribute($value)
@@ -78,7 +85,7 @@ class Due extends Model
 
     public function setPaidAmountAttribute($value)
     {
-        $this->attributes['paid_amount'] = $value * 100;
+        $this->attributes['paid_amount'] = $value;
     }
 
     public function getDiscountAttribute($value)
@@ -88,7 +95,7 @@ class Due extends Model
 
     public function setDiscountAttribute($value)
     {
-        $this->attributes['discount'] = $value * 100;
+        $this->attributes['discount'] = $value;
     }
 
     public function getStatusAttribute()

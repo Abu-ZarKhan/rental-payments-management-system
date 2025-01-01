@@ -22,7 +22,14 @@ class CreateDue extends Component
     public $paid_amount;
     public $discount;
     public $note;
-    public $payment_method; 
+    public $payment_method;
+    public $actual_office_rent;
+    public $admin_fee;
+    public $security_deposit;
+    public $parking_card_fee;
+    public $commission;
+    public $ejari;
+    public $vat;
 
     protected $listeners = [
         'openCreateDueModal' => 'openModal',
@@ -32,6 +39,11 @@ class CreateDue extends Component
     protected $rules = [
         'note' => 'required|array',
     ];
+    public function updatedAmount()
+    {
+        // Calculate VAT as 5% of the amount
+        $this->vat = $this->amount * 0.05;
+    }
 
     public function mount()
     {
@@ -45,7 +57,7 @@ class CreateDue extends Component
         $this->amount = 0.00;
         $this->paid_amount = 0.00;
         $this->discount = 0.00;
-        $this->payment_method = ''; 
+        $this->payment_method = '';
         $this->open = true;
     }
 
@@ -53,7 +65,22 @@ class CreateDue extends Component
     {
         $this->open = false;
         $this->resetValidation();
-        $this->reset(["amount", "paid_amount", "discount", "note", "due_category_id", "tenant_id","payment_method" ]);
+        $this->reset([
+            "amount",
+            "paid_amount",
+            "discount",
+            "note",
+            "due_category_id",
+            "tenant_id",
+            "payment_method",
+            "actual_office_rent",
+            "admin_fee",
+            "security_deposit",
+            "parking_card_fee",
+            "commission",
+            "ejari",
+            "vat",
+        ]);
     }
 
     public function storeDue()
@@ -66,6 +93,13 @@ class CreateDue extends Component
             "due_category_id" => "required|integer|exists:due_categories,id",
             "tenant_id" => "required|integer|exists:tenants,id",
             "payment_method" => "required|in:online,cash,cheque",  // Add validation rule
+            "actual_office_rent" => "required|numeric",
+            "admin_fee" => "required|numeric",
+            "security_deposit" => "nullable|numeric|min:0",
+            "parking_card_fee" => "nullable|numeric|min:0",
+            "commission" => "nullable|numeric|min:0",
+            "ejari" => "nullable|numeric|min:0",
+            // "vat" => "nullable|numeric",
 
         ]);
 
@@ -80,6 +114,13 @@ class CreateDue extends Component
             "due_category_id" => $this->due_category_id,
             "tenant_id" => $this->tenant_id,
             "payment_method" => $this->payment_method,  // Add to creation array
+            "actual_office_rent" => $this->actual_office_rent,
+            "admin_fee" => $this->admin_fee,
+            "security_deposit" => $this->security_deposit,
+            "parking_card_fee" => $this->parking_card_fee,
+            "commission" => $this->commission,
+            "ejari" => $this->ejari,
+            "vat" => $this->vat,
 
         ]);
 
