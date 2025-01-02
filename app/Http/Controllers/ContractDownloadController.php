@@ -17,9 +17,17 @@ class ContractDownloadController extends Controller
 
             $phpWord = new PhpWord();
             $phpWord->setDefaultFontName('Arial');
-            $phpWord->setDefaultFontSize(12);
+            $phpWord->setDefaultFontSize(9); // Slightly reduced from 12 to fit better
 
-            $section = $phpWord->addSection();
+            // Configure A4 page size and margins
+            $section = $phpWord->addSection([
+                'pageSizeW' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(21),  // A4 width
+                'pageSizeH' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(29.7), // A4 height
+                'marginLeft' => 500,
+                'marginRight' => 500,
+                'marginTop' => 500,
+                'marginBottom' => 500,
+            ]);
 
             // Full-page border using a table
             $borderStyle = [
@@ -34,7 +42,7 @@ class ContractDownloadController extends Controller
             $table->addRow();
             $cell = $table->addCell(10000);
 
-            // Add header table style for the inner table
+            // Header table style
             $headerTableStyle = [
                 'borderSize' => 0,
                 'cellMargin' => 50,
@@ -51,6 +59,7 @@ class ContractDownloadController extends Controller
             $leftCell->addText("Sheikh Zayed Road, Dubai", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
             $leftCell->addText("Trade Licence: 967319", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
            
+            // Reduced break
             $cell->addTextBreak(1);
 
             // Right cell for logo (60% width)
@@ -64,187 +73,134 @@ class ContractDownloadController extends Controller
                 ]
             );
             
-            // Add title
-            $cell->addText("Tel: +971 50 172 5600, +971 50 924 5979, +971 50 924 5979 , Email: management@xavier.ae,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left']);
-            $cell->addText("Address: ibne battuta gate building near ibne battuta mall  metro station  ,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left']);
+            // Contact details
+            $cell->addText("Tel: +971 50 172 5600, +971 50 924 5979, +971 50 924 5979 , Email: management@xavier.ae,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left', 'spacing' => 0]);
+            $cell->addText("Address: ibne battuta gate building near ibne battuta mall  metro station  ,", ['bold' => true, 'size' => 10, 'color' => '#4465A1'], ['alignment' => 'left', 'spacing' => 0]);
             $cell->addText("OFFICE LEASE CONTRACT", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
 
-            // Add contract details table
+            // Contract details table with reduced height
             $contractTable = $cell->addTable('ContractTable');
             $this->addTableRowWithBottomBorder($contractTable, 'Company Name:', $contract->company, 'Landlord Name:', $contract->landlord_name);
             $this->addTableRowWithBottomBorder($contractTable, 'Land Location:', $contract->land_location, 'Location:', $contract->location);
             $this->addTableRowWithBottomBorder($contractTable, 'Tenant Name:', $contract->tenant->name, 'Trade License:', $contract->trade_license);
             $this->addTableRowWithBottomBorder($contractTable, 'Nationality:', $contract->nationality, 'EID No:', $contract->eid_no);
             $this->addTableRowWithBottomBorder($contractTable, 'Contract Start:', $contract->start_date, 'Contract End:', $contract->end_date);
-            $this->addTableRowWithBottomBorder($contractTable, 'Ejari:', $contract->ejari, 'Contact No:', $contract->contact_no);
-            // Add the new section with title and table
-            $cell->addText("Building Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
-            // $phpWord->addTableStyle('ContractTable2', $tableStyle);
-            $contractTable2 = $cell->addTable('contractTable2');
-            $this->addTableRowWithBottomBorder($contractTable2, 'Address:', $contract->apartment->building->address, 'Building Number:', $contract->apartment->building->number);
-            $this->addTableRowWithBottomBorder($contractTable2, 'Floor:', $contract->apartment->floor, 'Apartment:', $contract->apartment->number);
-            // Add a new section with title and table for Additional Information
-
+            $this->addTableRowWithBottomBorder(
+                $contractTable, 
+                'Ejari:', 
+                $contract->ejari >= 0 ? 'Yes' : 'No', 
+                'Contact No:', 
+                $contract->contact_no
+            );
             
-           // Add a new section with title and table for Paid Dues
+            // Payment Details section
             $cell->addText("Payment Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
-
-            // Create a new table for Paid Dues with the same style
             $paymentTable = $cell->addTable('PaymentTable');
+            $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Payee Bank','Amount', 'Narration');
 
-
-            $paymentTable = $cell->addTable('PaymentTable');
-
-            // Add header row
-            $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Payee Bank','Amount', 'Narration', );
-
-            // Populate the table with Paid Dues
             foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
                 $this->addTableRowWithBottomBorder(
                     $paymentTable,
                     formatDate($paidDue->created_at),
                     $paidDue->payment_method,
                     formatCurrency($paidDue->paid_amount),
-                    $paidDue->note ?: '-',
+                    $paidDue->note ?: '-'
                 );
             }
 
-          // Add a new section with title and table for Package Details
-                    $cell->addText("Package Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+            // Package Details section
+            $cell->addText("Package Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+            $packageTable = $cell->addTable('PackageTable');
+            
+            $building = $contract->apartment->building;
+            if (!$building) {
+                $building = (object)[
+                    'executive_table' => '-',
+                    'executive_chair' => '-',
+                    'guest_chair' => '-',
+                    'staff_workstations' => '-',
+                    'staff_chairs' => '-',
+                    'cabinet' => '-',
+                    'conference_room' => '-',
+                    'sofa' => '-',
+                    'cleaning' => '-',
+                    'parking' => '-',
+                    'drinking_water' => '-',
+                    'electricity' => '-',
+                    'internet' => '-',
+                    'refreshment_tea_coffee' => '-',
+                ];
+            }
 
-                    // Create a new table for Package Details with the same style
-                    $packageTable = $cell->addTable('PackageTable');
+            // Package details rows
+            $this->addTableRowWithBottomBorder($packageTable, 'Executive Table:', $building->executive_table ?? '-', 'Executive Chair:', $building->executive_chair ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Guest Chair:', $building->guest_chair ?? '-', 'Staff Workstations:', $building->staff_workstations ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Staff Chairs:', $building->staff_chairs ?? '-', 'Cabinet:', $building->cabinet ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Conference Room:', $building->conference_room ?? '-', 'Sofa:', $building->sofa ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Cleaning:', $building->cleaning ?? '-', 'Parking:', $building->parking ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Drinking Water:', $building->drinking_water ?? '-', 'Electricity:', $building->electricity ?? '-');
+            $this->addTableRowWithBottomBorder($packageTable, 'Internet:', $building->internet ?? '-', 'Conference Room:', $building->conference_room ?? '-');
 
-                    // Populate the table with package details from the building
-                    $building = $contract->apartment->building;
-
-                    // Check if the building exists to avoid null errors
-                    if (!$building) {
-                        $building = (object)[
-                            'executive_table' => '-',
-                            'executive_chair' => '-',
-                            'guest_chair' => '-',
-                            'staff_workstations' => '-',
-                            'staff_chairs' => '-',
-                            'cabinet' => '-',
-                            'conference_room' => '-',
-                            'sofa' => '-',
-                            'cleaning' => '-',
-                            'parking' => '-',
-                            'drinking_water' => '-',
-                            'electricity' => '-',
-                            'internet' => '-',
-                            'refreshment_tea_coffee' => '-',
-                            
-                        ];
-                    }
-
-                    // Add rows for package details
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'Executive Table:', $building->executive_table ?? '-',
-                        
-                        'Executive Chair:', $building->executive_chair ?? '-'
-                    );
-
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'Guest Chair:', $building->guest_chair ?? '-',
-                        'Staff Workstations:', $building->staff_workstations ?? '-'
-                    );
-
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'Staff Chairs:', $building->staff_chairs ?? '-',
-                        'Cabinet:', $building->cabinet ?? '-'
-                    );
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'conference_room:', $building->conference_room ?? '-',
-                        'sofa:', $building->sofa ?? '-'
-                    );
-                     $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'cleaning:', $building->cleaning ?? '-',
-                        'parking:', $building->parking ?? '-'
-                    );
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'drinking_water:', $building->drinking_water ?? '-',
-                        'electricity:', $building->electricity ?? '-'
-                    ); 
-                    $this->addTableRowWithBottomBorder(
-                        $packageTable,
-                        'internet:', $building->internet ?? '-',
-                        'conference_room:', $building->conference_room ?? '-'
-                    );
-                  // Add a new section with title and table for Account Details
+            // Account Details section
+           // Add the "Account Details" section title
+// Add the "Account Details" section title
 $cell->addText("Account Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
 
-// Create a new table for Account Details with the same style
-$packageTable = $cell->addTable('PackageTable');
+// Add the table for account details
+$accountDetailsTable = $cell->addTable('AccountDetailsTable');
 
-// Filter dues for the specific contract
-$dues = $contract->tenant->dues->filter(fn($due) => $due->status && $due->contract_id == $contract->id);
+// Define column headings
+$accountDetailsTable->addRow();
+$accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+    ->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+$accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+    ->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+$accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+    ->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+$accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+    ->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
 
-// Check if there are dues available
-if ($dues->isNotEmpty()) {
-    foreach ($dues as $due) {
-        // Add rows for dues details
-        $this->addTableRowWithBottomBorder(
-            $packageTable,
-            'Due Description:', $due->description ?? '-', // Use 'description' column
-            'Amount:', $due->amount ?? '-'               // Use 'amount' column
-        );
+// Add rows for each account detail
+$actualOfficeRent = $contract->actual_office_rent ?? 0;
+$discount = $contract->discount ?? 0;
 
-        $this->addTableRowWithBottomBorder(
-            $packageTable,
-            'Admin Fee:', $due->admin_fee ?? '-',        // Use 'admin_fee' column
-            'VAT:', $due->vat ?? '-'                    // Use 'vat' column
-        );
+// Calculate Net Amount
+$netRent = $actualOfficeRent - $discount;
 
-        $this->addTableRowWithBottomBorder(
-            $packageTable,
-            'Security Deposit:', $due->security_deposit ?? '-', // Use 'security_deposit' column
-            'Commission:', $due->commission ?? '-'             // Use 'commission' column
-        );
+$accountDetails = [
+    ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
+    ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
+    ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
+    ['VAT 5%', '-', '-', $contract->vat ?? '-'],
+    ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
+    ['Commission', '-', '-', $contract->commission ?? '-'],
+    ['Ejari', '-', '-', $contract->ejari ?? '-'],
+];
 
-        $this->addTableRowWithBottomBorder(
-            $packageTable,
-            'Parking Card Fee:', $due->parking_card_fee ?? '-', // Use 'parking_card_fee' column
-            'Ejari:', $due->ejari ?? '-'                       // Use 'Ejari' column
-        );
+foreach ($accountDetails as $row) {
+    $accountDetailsTable->addRow();
+    foreach ($row as $key => $value) {
+        $alignment = $key === 0 ? ['alignment' => 'left'] : ['alignment' => 'center'];
+        $accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+            ->addText($value, ['size' => 11], $alignment);
     }
-} else {
-    // Add a single row if no dues are available
-    $this->addTableRowWithBottomBorder(
-        $packageTable,
-        'Dues:', 'No dues available',
-        '', ''
-    );
 }
 
 
-                    
 
-
-            // Add a new table for the signature section
+            // Signature section
             $signatureTable = $cell->addTable();
-
-            // Add a row for signatures
             $signatureTable->addRow();
-
-            // Left cell: Tenant signature
+            
             $tenantCell = $signatureTable->addCell(5000);
             $tenantCell->addText("Tenant Signature / Stamp", ['bold' => true, 'size' => 10], ['alignment' => 'center']);
-            $tenantCell->addText("-----------------------", [], ['alignment' => 'center',]);
+            $tenantCell->addText("-----------------------", [], ['alignment' => 'center']);
 
-            // Right cell: Landlord signature
             $landlordCell = $signatureTable->addCell(5000);
             $landlordCell->addText("Landlord Signature / Stamp", ['bold' => true, 'size' => 10], ['alignment' => 'center']);
-            $landlordCell->addText("-----------------------", [], ['alignment' => 'center',]);
+            $landlordCell->addText("-----------------------", [], ['alignment' => 'center']);
 
-            // Set filename and save
+            // Save document
             $fileName = 'Contract_' . $contract->id . '_' . time() . '.docx';
             header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             header('Content-Disposition: attachment; filename="' . $fileName . '"');
@@ -257,70 +213,56 @@ if ($dues->isNotEmpty()) {
         }
     }
 
-    // Modified addTableRow method to accept four parameters for label and value pairs
-    private function addTableRow($table, $label1, $value1, $label2 = null, $value2 = null)
+    private function addTableRowWithBottomBorder($table, ...$params)
     {
-        $table->addRow();
-        $table->addCell(2500)->addText($label1, ['bold' => true]);
-        $table->addCell(2500)->addText($value1);
-        
-        // Add second label and value pair only if provided
-        if ($label2 && $value2) {
-            $table->addCell(2500)->addText($label2, ['bold' => true]);
-            $table->addCell(2500)->addText($value2);
-        }
-    }
+        $table->addRow(250); // Reduced row height for better fit
 
+        $cellStyle = [
+            'borderBottomSize' => 6,
+            'borderBottomColor' => '000000',
+            'valign' => 'center',
+            'spaceAfter' => 0,
+            'spaceBefore' => 0,
+            'spacing' => 0,
+        ];
 
-private function addTableRowWithBottomBorder($table, ...$params)
-{
-    $table->addRow();
+        $cellStyleFullBorder = [
+            'borderSize' => 6,
+            'borderColor' => '000000',
+            'valign' => 'center',
+            'spaceAfter' => 0,
+            'spaceBefore' => 0,
+            'spacing' => 0,
+        ];
 
-    // Define styles for vertical and horizontal centering
-    $cellStyle = [
-        'borderBottomSize' => 6,
-        'borderBottomColor' => '000000',
-        'height' => 300,
-        'valign' => 'center', // Vertical centering
-    ];
+        $textStyle = [
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+        ];
 
-    $cellStyleFullBorder = [
-        'borderSize' => 6,
-        'borderColor' => '000000',
-        'height' => 300,
-        'valign' => 'center', // Vertical centering
-    ];
+        // Check if this is a payment table row (4 columns) or a regular row (2 label-value pairs)
+        $isPaymentTable = $params[0] === 'Date' || strtotime($params[0]) !== false;
 
-    $textStyle = [
-        'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, // Horizontal centering
-    ];
-
-    // Check if this is a payment table row (4 columns) or a regular row (2 label-value pairs)
-    $isPaymentTable = $params[0] === 'Date' || strtotime($params[0]) !== false;
-
-    if ($isPaymentTable) {
-        $columnWidths = [2000, 2000, 3000, 3000]; // Adjusted widths for 4 columns
-        
-        for ($i = 0; $i < count($params); $i++) {
-            $cell = $table->addCell($columnWidths[$i], $cellStyleFullBorder);
-            $cell->addText($params[$i] ?? '-', ['size' => 9, 'bold' => true], $textStyle);
-        }
-    } else {
-        // Handle regular label-value pairs (original format)
-        $cell1 = $table->addCell(2500, $cellStyle);
-        $cell1->addText($params[0], ['bold' => true], $textStyle);
-        
-        $cell2 = $table->addCell(2500, $cellStyle);
-        $cell2->addText($params[1], ['size' => 9, 'bold' => true], $textStyle);
-
-        if (isset($params[2]) && isset($params[3])) {
-            $cell3 = $table->addCell(2500, $cellStyle);
-            $cell3->addText($params[2], ['bold' => true], $textStyle);
+        if ($isPaymentTable) {
+            $columnWidths = [2000, 2000, 3000, 3000];
             
-            $cell4 = $table->addCell(2500, $cellStyle);
-            $cell4->addText($params[3], ['size' => 9, 'bold' => true], $textStyle);
+            for ($i = 0; $i < count($params); $i++) {
+                $cell = $table->addCell($columnWidths[$i], $cellStyleFullBorder);
+                $cell->addText($params[$i] ?? '-', ['size' => 9, 'bold' => true], $textStyle);
+            }
+        } else {
+            $cell1 = $table->addCell(2500, $cellStyle);
+            $cell1->addText($params[0], ['bold' => true], $textStyle);
+            
+            $cell2 = $table->addCell(2500, $cellStyle);
+            $cell2->addText($params[1], ['size' => 9, 'bold' => true], $textStyle);
+
+            if (isset($params[2]) && isset($params[3])) {
+                $cell3 = $table->addCell(2500, $cellStyle);
+                $cell3->addText($params[2], ['bold' => true], $textStyle);
+                
+                $cell4 = $table->addCell(2500, $cellStyle);
+                $cell4->addText($params[3], ['size' => 9, 'bold' => true], $textStyle);
+            }
         }
     }
-}
-
 }

@@ -18,10 +18,10 @@
                         <i class="fas fa-trash"></i>
                     </button>
                     <button
-    class="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
-    onclick="downloadContract({{ $contract->id }})">
-    <i class="fas fa-download"></i>
-</button>
+                        class="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
+                        onclick="downloadContract({{ $contract->id }})">
+                        <i class="fas fa-download"></i>
+                    </button>
 
                 </div>
             </div>
@@ -70,6 +70,87 @@
                         </p>
 
                     </div>
+
+                </div>
+                <div
+                    class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+                    
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Actual Office Rent') }}
+                        </p>
+                        <p> {{ $contract->actual_office_rent }}
+                            
+                        </p>
+                    </div>
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Admin Fee') }}
+                        </p>
+                        <p>
+                            {{ $contract->admin_fee }}
+                        </p>
+
+                    </div>
+
+                </div>
+                <div
+                    class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+                    
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Security Deposit') }}
+                            
+                        </p>
+                        <p> {{ $contract->security_deposit }}
+                            
+                        </p>
+                    </div>
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Vat 5%') }}
+                        </p>
+                        <p>
+                            {{ $contract->vat }}
+                        </p>
+
+                    </div>
+
+                </div>
+                <div
+                    class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+                    
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Parking Card Fee') }}
+                        </p>
+                        <p> {{ $contract->parking_card_fee }}
+                            
+                        </p>
+                    </div>
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Commission') }}
+                        </p>
+                        <p>
+                            {{ $contract->commission }}
+                        </p>
+
+                    </div>
+
+                </div>
+                <div
+                    class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+                    
+                    <div class="  flex w-1/2 px-3 justify-between">
+                        <p class="text-gray-600 font-bold">
+                            {{ __('app.Ejari') }}
+                        </p>
+                        <p> {{ $contract->ejari }}
+                            
+                        </p>
+                    </div>
+                   
 
                 </div>
 
