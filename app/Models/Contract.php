@@ -35,6 +35,7 @@ class Contract extends Model
         'admin_fee',
         'commission',
         'parking_card_fee',
+        'ejari',
     ];
 
     protected $hidden = ['updated_at'];

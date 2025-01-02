@@ -89,23 +89,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group w-1/2">
-
-                                <div>
-                                    <label for="ejari">Ejari</label>
-                                </div>
-                                <select
-                                    id="ejari"
-                                    wire:model="ejari"
-                                    class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md " style="width:150px">
-                                    <option value="">Select Option</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                                @error('ejari')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                    
                             <div class="form-group w-1/2">
                                 <label for="eid_no">EID No</label>
                                 <input type="text" id="eid_no" wire:model="eid_no" class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">

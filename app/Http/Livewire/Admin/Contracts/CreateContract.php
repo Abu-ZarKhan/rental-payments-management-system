@@ -29,7 +29,6 @@ class CreateContract extends Component
     public $location;
     public $trade_license;
     public $nationality;
-    public $ejari;
     public $eid_no;
     public $contact_no;
     public $actual_office_rent;
@@ -39,6 +38,7 @@ class CreateContract extends Component
     public $admin_fee;
     public $commission;
     public $parking_card_fee;
+    public $ejari;
 
     // Validation rules
     protected $rules = [
@@ -56,7 +56,6 @@ class CreateContract extends Component
         'trade_license' => 'nullable|string|max:255',
         'nationality' => 'nullable|string|max:255',
         'eid_no' => 'nullable|string|max:255',
-        'ejari' => 'nullable|in:Yes,No',
         'contact_no' => 'nullable|string|max:15',
         'actual_office_rent' => 'nullable|numeric',
         'discount' => 'nullable|numeric',
@@ -65,6 +64,7 @@ class CreateContract extends Component
         'admin_fee' => 'nullable|numeric',
         'commission' => 'nullable|numeric',
         'parking_card_fee' => 'nullable|numeric',
+        'ejari' => 'nullable|numeric',
     ];
 
     protected $listeners = [
@@ -99,7 +99,6 @@ class CreateContract extends Component
             "location",
             "trade_license",
             "nationality",
-            "ejari",
             "contact_no",
             "actual_office_rent",
             "discount",
@@ -108,6 +107,7 @@ class CreateContract extends Component
             "admin_fee",
             "commission",
             "parking_card_fee",
+            "ejari",
         ]);
     }
 
@@ -153,7 +153,6 @@ class CreateContract extends Component
             "trade_license" => $this->trade_license,
             "nationality" => $this->nationality,
             "eid_no" => $this->eid_no,
-            "ejari" => $this->ejari,
             "contact_no" => $this->contact_no,
             "actual_office_rent" => $this->actual_office_rent,
             "discount" => $this->discount,
@@ -162,6 +161,7 @@ class CreateContract extends Component
             "admin_fee" => $this->admin_fee,
             "commission" => $this->commission,
             "parking_card_fee" => $this->parking_card_fee,
+            "ejari" => $this->ejari,
         ]);
 
         // Close the modal after successful contract creation

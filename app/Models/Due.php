@@ -75,7 +75,7 @@ class Due extends Model
 
     public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value;
+        $this->attributes['amount'] = $value * 100;
     }
 
     public function getPaidAmountAttribute($value)
@@ -85,7 +85,7 @@ class Due extends Model
 
     public function setPaidAmountAttribute($value)
     {
-        $this->attributes['paid_amount'] = $value;
+        $this->attributes['paid_amount'] = $value *100;
     }
 
     public function getDiscountAttribute($value)
@@ -95,7 +95,7 @@ class Due extends Model
 
     public function setDiscountAttribute($value)
     {
-        $this->attributes['discount'] = $value;
+        $this->attributes['discount'] = $value * 100;
     }
 
     public function getStatusAttribute()
