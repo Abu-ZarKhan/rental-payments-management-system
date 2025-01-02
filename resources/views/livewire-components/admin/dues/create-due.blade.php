@@ -195,7 +195,7 @@
 
     @endif
 </div>
-<script>
+<!-- <script>
     function calculateVAT() {
         const amount = parseFloat(document.getElementById('amount').value) || 0;
         const discount = parseFloat(document.getElementById('discount').value) || 0;
@@ -203,7 +203,7 @@
 
         document.getElementById('vat').value = vat > 0 ? vat : 0;
     }
-</script>
+</script> -->
 <!-- <div class="w-40">
         <label for="vat" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
             VAT 5%

@@ -141,7 +141,7 @@
                                     @enderror
                                 </div>
 
-                            </div>
+                        </div>
                             <div class="row flex gap-4">
                                 <div class="form-group w-1/2">
                                     <label for="start_date" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
@@ -166,10 +166,94 @@
                                     @error('duration')
                                     <span class="text-xs text-red-600">{{ $message }}</span>
                                     @enderror
+                                </div>                              
+                            </div>
+                            <div class="p-5 title text-gray-900 font-bold text-3xl text-center w-full">
+                            {{ __('app.Particulars') }}
+                        </div>
+                        <div class="row flex flex-wrap gap-4">
+                                <!-- First group with 3 inputs -->
+                                <div class="w-full flex flex-wrap gap-4">
+                                       <!-- Input: Actual Office Rent -->
+     <!-- Input: Actual Office Rent -->
+     <div class="form-group w-1/2">
+        <label for="actual_office_rent">Actual Office Rent</label>
+        <input type="number" id="actual_office_rent" oninput="calculateVAT()" 
+            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+    </div>
+
+    <!-- Input: Discount -->
+    <div class="form-group w-1/2">
+        <label for="discount">Discount</label>
+        <input type="number" id="discount" oninput="calculateVAT()"
+            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+    </div>
+
+ </div>
+                                
+                                <!-- Second group with 3 inputs -->
+                                <div class="w-full flex flex-wrap gap-4">
+                                    <!-- Input 3 -->
+                                    <div class="form-group w-1/2">
+                                        <label for="security_deposit">Security Deposit</label>
+                                        <input type="number" id="security_deposit" wire:model.defer="security_deposit"
+                                            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                        @error('security_deposit')
+                                        <span class="text-xs text-red-600">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <!-- Input 4 -->
+                                     <!-- Input: VAT 5% -->
+                                <!-- Input: VAT 5% -->
+                                <div class="form-group w-1/2">
+                                    <label for="vat_5_percent">VAT 5%</label>
+                                    <input type="number" id="vat_5_percent" readonly
+                                        class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md bg-gray-100">
                                 </div>
 
+                                    <!-- Input 5 -->
+                                
+                                    <div class="form-group w-1/2">
+                                        <label for="admin_fee">Admin Fee</label>
+                                        <input type="number" id="admin_fee" wire:model.defer="admin_fee"
+                                            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                        @error('admin_fee')
+                                        <span class="text-xs text-red-600">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
+                                    <!-- Input 6 -->
+                                    <div class="form-group w-1/2">
+                                        <label for="commission">Commission</label>
+                                        <input type="number" id="commission" wire:model.defer="commission"
+                                            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                        @error('commission')
+                                        <span class="text-xs text-red-600">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Third group with 1 input -->
+                                <div class="w-full flex flex-wrap gap-4">
+                                    <div class="form-group w-1/2">
+                                        <label for="ejari">Ejari</label>
+                                        <input type="number" id="ejari" wire:model.defer="ejari"
+                                            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                        @error('ejari')
+                                        <span class="text-xs text-red-600">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group w-1/2">
+                                        <label for="parking_card_fee">Parking Card Fee</label>
+                                        <input type="number" id="parking_card_fee" wire:model.defer="parking_card_fee"
+                                            class="border border-gray-300 p-2 outline-none w-full mt-2 rounded-md">
+                                        @error('parking_card_fee')
+                                        <span class="text-xs text-red-600">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
+
 
                             <div class="flex flex-col mb-4">
                                 <label for="building_id" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
@@ -280,3 +364,19 @@
 
         @endif
     </div>
+    <script>
+    function calculateVAT() {
+        // Retrieve the values from the input fields
+        const rent = parseFloat(document.getElementById('actual_office_rent').value) || 0;
+        const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+        // Calculate the remaining amount after discount
+        const remainingAmount = rent - discount;
+
+        // Calculate VAT (5% of remaining amount)
+        const vat = remainingAmount > 0 ? remainingAmount * 0.05 : 0;
+
+        // Update the VAT field with the calculated value
+        document.getElementById('vat_5_percent').value = vat.toFixed(2);
+    }
+</script>

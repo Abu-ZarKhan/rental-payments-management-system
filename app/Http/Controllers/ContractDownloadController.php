@@ -96,16 +96,16 @@ class ContractDownloadController extends Controller
             $paymentTable = $cell->addTable('PaymentTable');
 
             // Add header row
-            $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Amount', 'Narration', 'Payee Bank');
+            $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Payee Bank','Amount', 'Narration', );
 
             // Populate the table with Paid Dues
             foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
                 $this->addTableRowWithBottomBorder(
                     $paymentTable,
                     formatDate($paidDue->created_at),
+                    $paidDue->payment_method,
                     formatCurrency($paidDue->paid_amount),
                     $paidDue->note ?: '-',
-                    $paidDue->payment_method,
                 );
             }
 
@@ -178,6 +178,54 @@ class ContractDownloadController extends Controller
                         'internet:', $building->internet ?? '-',
                         'conference_room:', $building->conference_room ?? '-'
                     );
+                  // Add a new section with title and table for Account Details
+$cell->addText("Account Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+
+// Create a new table for Account Details with the same style
+$packageTable = $cell->addTable('PackageTable');
+
+// Filter dues for the specific contract
+$dues = $contract->tenant->dues->filter(fn($due) => $due->status && $due->contract_id == $contract->id);
+
+// Check if there are dues available
+if ($dues->isNotEmpty()) {
+    foreach ($dues as $due) {
+        // Add rows for dues details
+        $this->addTableRowWithBottomBorder(
+            $packageTable,
+            'Due Description:', $due->description ?? '-', // Use 'description' column
+            'Amount:', $due->amount ?? '-'               // Use 'amount' column
+        );
+
+        $this->addTableRowWithBottomBorder(
+            $packageTable,
+            'Admin Fee:', $due->admin_fee ?? '-',        // Use 'admin_fee' column
+            'VAT:', $due->vat ?? '-'                    // Use 'vat' column
+        );
+
+        $this->addTableRowWithBottomBorder(
+            $packageTable,
+            'Security Deposit:', $due->security_deposit ?? '-', // Use 'security_deposit' column
+            'Commission:', $due->commission ?? '-'             // Use 'commission' column
+        );
+
+        $this->addTableRowWithBottomBorder(
+            $packageTable,
+            'Parking Card Fee:', $due->parking_card_fee ?? '-', // Use 'parking_card_fee' column
+            'Ejari:', $due->ejari ?? '-'                       // Use 'Ejari' column
+        );
+    }
+} else {
+    // Add a single row if no dues are available
+    $this->addTableRowWithBottomBorder(
+        $packageTable,
+        'Dues:', 'No dues available',
+        '', ''
+    );
+}
+
+
+                    
 
 
             // Add a new table for the signature section

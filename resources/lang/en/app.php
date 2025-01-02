@@ -4,6 +4,7 @@ return [
     "Executive Table"=>"Executive Table",
     "Executive Chair"=>"Executive Chair",
     "Sofa"=>"Sofa",
+    "Particulars"=>"Particulars",
     "Internet"=>"Internet",
     "Please Wait"=>"Please Wait",
     "Payment Method"=>"Payment Method",
