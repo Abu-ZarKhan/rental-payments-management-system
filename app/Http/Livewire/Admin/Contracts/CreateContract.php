@@ -20,7 +20,6 @@ class CreateContract extends Component
     public $start_date;
     public $duration;
     public $rent_amount;
-
     public $building_id;
     public $floor_no;
     public $apartment_id;
@@ -33,9 +32,40 @@ class CreateContract extends Component
     public $ejari;
     public $eid_no;
     public $contact_no;
+    public $actual_office_rent;
+    public $discount;
+    public $security_deposit;
+    public $vat;
+    public $admin_fee;
+    public $commission;
+    public $parking_card_fee;
 
-
-
+    // Validation rules
+    protected $rules = [
+        'start_date' => 'required|date',
+        'duration' => 'required|numeric|max:50',
+        'rent_amount' => 'required|numeric',
+        'building_id' => 'required|integer|exists:buildings,id',
+        'floor_no' => 'required|integer',
+        'apartment_id' => 'required|integer|exists:apartments,id',
+        'tenant_id' => 'required|integer|exists:tenants,id',
+        'landlord_name' => 'nullable|string|max:255',
+        'land_location' => 'nullable|string|max:255',
+        'tenant_name' => 'nullable|string|max:255',
+        'location' => 'nullable|string|max:255',
+        'trade_license' => 'nullable|string|max:255',
+        'nationality' => 'nullable|string|max:255',
+        'eid_no' => 'nullable|string|max:255',
+        'ejari' => 'nullable|in:Yes,No',
+        'contact_no' => 'nullable|string|max:15',
+        'actual_office_rent' => 'nullable|numeric',
+        'discount' => 'nullable|numeric',
+        'security_deposit' => 'nullable|numeric',
+        'vat' => 'nullable|numeric',
+        'admin_fee' => 'nullable|numeric',
+        'commission' => 'nullable|numeric',
+        'parking_card_fee' => 'nullable|numeric',
+    ];
 
     protected $listeners = [
         'openCreateContractModal' => 'openModal',
@@ -71,6 +101,13 @@ class CreateContract extends Component
             "nationality",
             "ejari",
             "contact_no",
+            "actual_office_rent",
+            "discount",
+            "security_deposit",
+            "vat",
+            "admin_fee",
+            "commission",
+            "parking_card_fee",
         ]);
     }
 
@@ -94,26 +131,14 @@ class CreateContract extends Component
 
     public function storeDue()
     {
-        $this->validate([
-            "start_date" => "required|date",
-            "duration" => "required|max:50|numeric",
-            "company" => 'nullable|string|max:255',
-            "rent_amount" => "required|numeric",
-            "building_id" => "required|integer|exists:buildings,id",
-            "floor_no" => "required|integer",
-            "apartment_id" => "required|integer|exists:apartments,id",
-            "tenant_id" => "required|integer|exists:tenants,id",
-            'landlord_name' => 'nullable|string|max:255',
-            'land_location' => 'nullable|string|max:255',
-            "tenant_name" => "nullable|string|max:255",
-            "location" => "nullable|string|max:255",
-            "trade_license" => "nullable|string|max:255",
-            "nationality" => "nullable|string|max:255",
-            "eid_no" => "nullable|string|max:255",
-            "ejari" => "nullable|in:Yes,No",
-            "contact_no" => "nullable|string|max:15 ",
-        ]);
+        // Validate all fields using the $rules property
+        $this->validate();
 
+        // Calculate VAT (5% of rent_amount after discount)
+        $remainingAmount = $this->actual_office_rent - $this->discount;
+        $this->vat = $remainingAmount > 0 ? $remainingAmount * 0.05 : 0;
+
+        // Store the contract in the database
         Contract::create([
             "start_date" => $this->start_date,
             "duration" => $this->duration,
@@ -130,9 +155,16 @@ class CreateContract extends Component
             "eid_no" => $this->eid_no,
             "ejari" => $this->ejari,
             "contact_no" => $this->contact_no,
-            
+            "actual_office_rent" => $this->actual_office_rent,
+            "discount" => $this->discount,
+            "security_deposit" => $this->security_deposit,
+            "vat" => $this->vat,
+            "admin_fee" => $this->admin_fee,
+            "commission" => $this->commission,
+            "parking_card_fee" => $this->parking_card_fee,
         ]);
 
+        // Close the modal after successful contract creation
         $this->closeModal();
         $this->emit("success", __('messages.contract_created'));
     }

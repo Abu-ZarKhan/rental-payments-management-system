@@ -28,6 +28,13 @@ class Contract extends Model
         'nationality',
         'eid_no',
         'contact_no',
+        'actual_office_rent',
+        'discount',
+        'security_deposit',
+        'vat',
+        'admin_fee',
+        'commission',
+        'parking_card_fee',
     ];
 
     protected $hidden = ['updated_at'];
