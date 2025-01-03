@@ -76,7 +76,7 @@ class ContractDownloadController extends Controller
             $leftCell->addText("Sheikh Zayed Road, Dubai", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
             $leftCell->addText("Trade Licence: 967319", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
            
-            $cell->addTextBreak(1);
+            // $cell->addTextBreak(1);
 
             // Right cell for logo
             $rightCell = $headerTable->addCell(6000, ['valign' => 'center']);
@@ -229,7 +229,7 @@ $contactCell->addText(
                 foreach ($row as $key => $value) {
                     $alignment = $key === 0 ? ['alignment' => 'center'] : ['alignment' => 'center'];
                     $accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-                        ->addText($value, ['size' => 11], $alignment);
+                        ->addText($value, ['size' => 9, 'bold'=> true], $alignment);
                 }
             }
 

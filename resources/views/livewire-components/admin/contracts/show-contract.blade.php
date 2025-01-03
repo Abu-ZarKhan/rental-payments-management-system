@@ -139,7 +139,7 @@
                     </div>
 
                 </div>
-                <div
+                <!-- <div
                     class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
                     
                     <div class="  flex w-1/2 px-3 justify-between">
@@ -152,7 +152,7 @@
                     </div>
                    
 
-                </div>
+                </div> -->
 
                 <div
                     class= "row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
