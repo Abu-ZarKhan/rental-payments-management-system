@@ -233,12 +233,11 @@
                     </div>
                     <div class="  flex w-1/2 px-3 justify-between">
                         <p class="text-gray-600 font-bold">
-                            {{ __('app.Ejari') }}
+                            {{ __('app.End Date') }}
                         </p>
                         <p>
-                            {{ $contract->ejari }}
+                            {{ $contract->end_date }}
                         </p>
-
 
                     </div>
                 </div>
@@ -263,19 +262,7 @@
                     </div>
 
                 </div>
-                <div
-                    class= "row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-                    <div class="  flex w-1/2 px-3 justify-between">
-                        <p class="text-gray-600 font-bold">
-                            {{ __('app.End Date') }}
-                        </p>
-                        <p>
-                            {{ $contract->end_date }}
-                        </p>
-
-                    </div>
-                    
-                </div>
+               
 
                 <div
                     class="row flex justify-between md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
