@@ -22,13 +22,6 @@ class Due extends Model
         'due_category_id',
         'tenant_id',
         'payment_method',
-        'actual_office_rent',
-        'admin_fee',
-        'security_deposit',
-        'parking_card_fee',
-        'commission',
-        'ejari',
-        'vat',
     ];
 
     protected $hidden = ['updated_at'];
@@ -44,7 +37,8 @@ class Due extends Model
         return $this->belongsTo(DueCategory::class, 'due_category_id');
     }
 
-    public function tenant() {
+    public function tenant()
+    {
         return $this->belongsTo(Tenant::class);
     }
 
@@ -85,7 +79,7 @@ class Due extends Model
 
     public function setPaidAmountAttribute($value)
     {
-        $this->attributes['paid_amount'] = $value *100;
+        $this->attributes['paid_amount'] = $value * 100;
     }
 
     public function getDiscountAttribute($value)
