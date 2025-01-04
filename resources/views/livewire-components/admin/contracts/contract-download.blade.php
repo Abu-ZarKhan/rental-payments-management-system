@@ -88,7 +88,7 @@
         </div>
         <div class="contact">
             <p>Tel: +971 50 172 5600, +971 50 924 5979, Email: management@xavier.ae</p>
-            <p>Address: ibne battuta gate building near ibne battuta mall metro station</p>
+            <p>Address: Ibn Battuta Gate Building near Ibn Battuta Mall Metro Station</p>
         </div>
 
         <div class="section-title">OFFICE LEASE CONTRACT</div>
@@ -154,45 +154,45 @@
         <table>
             <tr>
                 <th>Executive Table:</th>
-                <td>{{ $building->executive_table }}</td>
+                <td>{{ $contract->building->executive_table }}</td>
                 <th>Executive Chair:</th>
-                <td>{{ $building->executive_chair }}</td>
+                <td>{{ $contract->building->executive_chair }}</td>
             </tr>
             <tr>
                 <th>Guest Chair:</th>
-                <td>{{ $building->guest_chair }}</td>
+                <td>{{ $contract->building->guest_chair }}</td>
                 <th>Staff Workstations:</th>
-                <td>{{ $building->staff_workstations }}</td>
+                <td>{{ $contract->building->staff_workstations }}</td>
             </tr>
             <tr>
                 <th>Staff Chairs:</th>
-                <td>{{ $building->staff_chairs }}</td>
+                <td>{{ $contract->building->staff_chairs }}</td>
                 <th>Cabinet:</th>
-                <td>{{ $building->cabinet }}</td>
+                <td>{{ $contract->building->cabinet }}</td>
             </tr>
             <tr>
                 <th>Conference Room:</th>
-                <td>{{ $building->conference_room }}</td>
+                <td>{{ $contract->building->conference_room }}</td>
                 <th>Sofa:</th>
-                <td>{{ $building->sofa }}</td>
+                <td>{{ $contract->building->sofa }}</td>
             </tr>
             <tr>
                 <th>Cleaning:</th>
-                <td>{{ $building->cleaning }}</td>
+                <td>{{ $contract->building->cleaning }}</td>
                 <th>Parking:</th>
-                <td>{{ $building->parking }}</td>
+                <td>{{ $contract->building->parking }}</td>
             </tr>
             <tr>
                 <th>Drinking Water:</th>
-                <td>{{ $building->drinking_water }}</td>
+                <td>{{ $contract->building->drinking_water }}</td>
                 <th>Electricity:</th>
-                <td>{{ $building->electricity }}</td>
+                <td>{{ $contract->building->electricity }}</td>
             </tr>
             <tr>
                 <th>Internet:</th>
-                <td>{{ $building->internet }}</td>
+                <td>{{ $contract->building->internet }}</td>
                 <th>Conference Room:</th>
-                <td>{{ $building->conference_room }}</td>
+                <td>{{ $contract->building->conference_room }}</td>
             </tr>
         </table>
 
@@ -214,6 +214,9 @@
                     ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
                     ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
                     ['VAT 5%', '-', '-', $contract->vat_amount ?? '-'],
+                    ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
+                    ['Commission', '-', '-', $contract->Commission ?? '-'],
+                    ['Ejari', '-', '-', $contract->ejari ?? '-'],
                     ['TOTAL', '-', '-', $contract->total_amount ?? '-'],
                 ];
             @endphp
