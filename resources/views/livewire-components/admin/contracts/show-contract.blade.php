@@ -22,7 +22,12 @@
                         onclick="downloadContract({{ $contract->id }})">
                         <i class="fas fa-download"></i>
                     </button>
-
+                    <button
+    class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor-pointer outline-none focus:outline-none"
+    onclick="viewContract({{ $contract->id }})">
+    <i class="fas fa-file-alt"></i>
+</button>
+                    
                 </div>
             </div>
             <div>
@@ -528,5 +533,16 @@
             });
         }, 2000);
     };
+</script>
+<script>
+    const viewDocument = (id) => {
+        // Open the document preview in a new tab
+        window.open(`/contract-preview/${id}`, '_blank');
+    };
+</script>
+<script>
+    function viewContract(contractId) {
+        window.location.href = `/contract/${contractId}/view`;
+    }
 </script>
 </div>

@@ -113,9 +113,9 @@
                                 </svg>
                                 <select id="payment_method" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none w-full" wire:model.defer="payment_method">
                                     <option value="" selected class="text-grey-600">{{ __('app.Choose Payment Method') }}</option>
-                                    <option value="online" class="text-grey-600">{{ __('app.Online') }}</option>
-                                    <option value="cash" class="text-grey-600">{{ __('app.Cash') }}</option>
-                                    <option value="cheque" class="text-grey-600">{{ __('app.Cheque') }}</option>
+                                    <option value="Online" class="text-grey-600">{{ __('app.Online') }}</option>
+                                    <option value="Cash" class="text-grey-600">{{ __('app.Cash') }}</option>
+                                    <option value="Cheque" class="text-grey-600">{{ __('app.Cheque') }}</option>
                                 </select>
                             </div>
                             @error("payment_method") <span class="text-xs text-red-600">{{ $message }}</span> @enderror

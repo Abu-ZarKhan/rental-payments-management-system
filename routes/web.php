@@ -21,6 +21,11 @@ Route::get('/contract-download/{id}', ContractDownloadController::class)
     ->middleware(['auth']);
 // added for download
 
+// Route::get('/contract/{id}/download', ContractDownloadController::class);
+Route::get('/contract/{id}/view', [ContractController::class, 'viewContract'])->name('contract.view');
+
+
+
 Route::view('/', 'frontend.home')->name('home');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {

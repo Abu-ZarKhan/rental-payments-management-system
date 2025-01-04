@@ -53,6 +53,11 @@ class Contract extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
+    public function dues()
+    {
+        return $this->hasMany(Due::class);
+    }
+    
 
     public function apartment()
     {
