@@ -15,7 +15,7 @@
             width: 21cm;
             height: 29.7cm;
             padding: 1cm;
-            border: 10px solid black;
+           
             box-sizing: border-box;
         }
         .header {
@@ -213,9 +213,9 @@
                     ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
                     ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
                     ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
-                    ['VAT 5%', '-', '-', $contract->vat_amount ?? '-'],
+                    ['VAT 5', '-', '-', $contract->vat ?? '-'],
                     ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
-                    ['Commission', '-', '-', $contract->Commission ?? '-'],
+                    ['Commission', '-', '-', $contract->commission ?? '-'],
                     ['Ejari', '-', '-', $contract->ejari ?? '-'],
                     ['TOTAL', '-', '-', $contract->total_amount ?? '-'],
                 ];
