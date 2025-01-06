@@ -120,7 +120,8 @@ $contactCell->addText(
 //     ['alignment' => 'left', 'spacing' => 0]
 // );
 
-            $cell->addText("OFFICE LEASE CONTRACT", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+            $cell->addText("OFFICE LEASE CONTRACT", ['bold' => true, 'size' => 14,'underline' => 'single'], ['alignment' => 'center',  'spaceBefore' => 0,
+    'spaceAfter' => 0,'shading' => ['fill' => '1F3864']]);
 
             // Contract details table
             $contractTableStyle = [
@@ -143,24 +144,168 @@ $contactCell->addText(
                 'Contact No:',
                 $contract->contact_no
             );
+// Account Details section
+$cell->addText("Account Details", ['bold' => true, 'size' => 12], ['alignment' => 'center',  'spaceBefore' => 0,
+'spaceAfter' => 0,'shading' => ['fill' => '1F3864']]);
+        $accountDetailsTable = $cell->addTable('ContractTable');
 
+
+        // Define Account Details array before the loop
+$actualOfficeRent = $contract->actual_office_rent ?? 0;
+$discount = $contract->discount ?? 0;
+$netRent = $actualOfficeRent - $discount;
+
+$accountDetails = [
+['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
+['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
+['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
+['VAT 5%', '-', '-', $contract->vat ?? '-'],
+['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
+['Commission', '-', '-', $contract->commission ?? '-'],
+['Ejari', '-', '-', $contract->ejari ?? '-'],
+];
+
+// Define column headings
+$accountDetailsTable->addRow();
+
+$accountDetailsTable->addCell(3200, [
+'borderBottomSize' => 6,
+'borderBottomColor' => '000000',
+'borderRightSize' => 6,
+'borderRightColor' => '000000'
+])->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+$accountDetailsTable->addCell(3200, [
+'borderBottomSize' => 6,
+'borderBottomColor' => '000000',
+'borderRightSize' => 6,
+'borderRightColor' => '000000'
+])->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12],  ['alignment' => 'center']);
+
+$accountDetailsTable->addCell(3000, [
+'borderBottomSize' => 6,
+'borderBottomColor' => '000000',
+'borderRightSize' => 6,
+'borderRightColor' => '000000'
+])->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12],  ['alignment' => 'center']);
+
+$accountDetailsTable->addCell(2500, [
+'borderBottomSize' => 6,
+'borderBottomColor' => '000000',
+'borderRightSize' => 6,
+'borderRightColor' => '000000'
+// ])->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['indentation' => ['left' => 200]]);
+])->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+// Add data rows with right borders and left padding
+foreach ($accountDetails as $row) {
+$accountDetailsTable->addRow();
+foreach ($row as $key => $value) {
+    $alignment = $key === 0 ? ['alignment' => 'left'] : ['alignment' => 'left'];
+    $accountDetailsTable->addCell(2000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6,
+        'borderRightColor' => '000000'
+    ])->addText($value, ['size' => 9, 'bold' => true], ['indentation' => ['left' => 100]]);
+}
+}
             // Payment Details section
-            $cell->addText("Payment Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
-            $paymentTable = $cell->addTable('ContractTable');
-            $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Payee Bank','Amount', 'Narration');
+            // $cell->addText("Payment Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'spaceBefore' => 0,
+            // 'spaceAfter' => 0, 'shading' => ['fill' => '1F3864']]);
+            // $paymentTable = $cell->addTable('ContractTable');
+            // $this->addTableRowWithBottomBorder($paymentTable, 'Date', 'Payee Bank','Amount', 'Narration');
 
-            foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
-                $this->addTableRowWithBottomBorder(
-                    $paymentTable,
-                    formatDate($paidDue->created_at),
-                    $paidDue->payment_method,
-                    formatCurrency($paidDue->paid_amount),
-                    $paidDue->note ?: '-'
-                );
-            }
+            // foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
+            //     $this->addTableRowWithBottomBorder(
+            //         $paymentTable,
+            //         formatDate($paidDue->created_at),
+            //         $paidDue->payment_method,
+            //         formatCurrency($paidDue->paid_amount),
+            //         $paidDue->note ?: '-'
+            //     );
+            // }
+            // Payment Details section
+$cell->addText("Payment Details", ['bold' => true, 'size' => 12], [
+    'alignment' => 'center',
+    'spaceBefore' => 0,
+    'spaceAfter' => 0,
+    'shading' => ['fill' => '1F3864']
+]);
+
+$paymentTable = $cell->addTable('ContractTable');
+
+// Define column headings with center alignment
+$paymentTable->addRow();
+
+$paymentTable->addCell(3200, [
+    'borderBottomSize' => 6,
+    'borderBottomColor' => '000000',
+    'borderRightSize' => 6,
+    'borderRightColor' => '000000'
+])->addText('Date', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+$paymentTable->addCell(3200, [
+    'borderBottomSize' => 6,
+    'borderBottomColor' => '000000',
+    'borderRightSize' => 6,
+    'borderRightColor' => '000000'
+])->addText('Payee Bank', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+$paymentTable->addCell(3000, [
+    'borderBottomSize' => 6,
+    'borderBottomColor' => '000000',
+    'borderRightSize' => 6,
+    'borderRightColor' => '000000'
+])->addText('Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+$paymentTable->addCell(2500, [
+    'borderBottomSize' => 6,
+    'borderBottomColor' => '000000',
+    'borderRightSize' => 6,
+    'borderRightColor' => '000000'
+])->addText('Narration', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+
+// Add data rows with borders and indentation (same layout styling)
+foreach ($contract->tenant->dues->filter(fn($due) => $due->status) as $paidDue) {
+    $paymentTable->addRow();
+
+    $paymentTable->addCell(3000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6,
+        'borderRightColor' => '000000'
+    ])->addText(formatDate($paidDue->created_at), ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+        // Payee Bank - Show value if available, otherwise '-'
+        $paymentTable->addCell(3000, [
+            'borderBottomSize' => 6,
+            'borderBottomColor' => '000000',
+            'borderRightSize' => 6,
+            'borderRightColor' => '000000'
+        ])->addText(ucfirst($paidDue->payment_method ?: '-'), ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+
+    $paymentTable->addCell(3000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6,
+        'borderRightColor' => '000000'
+    ])->addText(formatCurrency($paidDue->paid_amount), ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+    $paymentTable->addCell(2500, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6,
+        'borderRightColor' => '000000'
+    ])->addText($paidDue->note ?: '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+}
+
 
             // Package Details section
-            $cell->addText("Package Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
+            $cell->addText("Package Details", ['bold' => true, 'size' => 12], ['alignment' => 'center', 'spaceBefore' => 0,
+            'spaceAfter' => 0, 'shading' => ['fill' => '1F3864']]);
+
             $packageTable = $cell->addTable('ContractTable');
 
             $building = $contract->apartment->building;
@@ -183,112 +328,219 @@ $contactCell->addText(
                 ];
             }
 
-            // Package details rows
-            $this->addTableRowWithBottomBorder($packageTable, 'Executive Table:', $building->executive_table ?? '-', 'Executive Chair:', $building->executive_chair ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Guest Chair:', $building->guest_chair ?? '-', 'Staff Workstations:', $building->staff_workstations ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Staff Chairs:', $building->staff_chairs ?? '-', 'Cabinet:', $building->cabinet ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Conference Room:', $building->conference_room ?? '-', 'Sofa:', $building->sofa ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Cleaning:', $building->cleaning ?? '-', 'Parking:', $building->parking ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Drinking Water:', $building->drinking_water ?? '-', 'Electricity:', $building->electricity ?? '-');
-            $this->addTableRowWithBottomBorder($packageTable, 'Internet:', $building->internet ?? '-', 'Conference Room:', $building->conference_room ?? '-');
+            // First Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Executive Table:', ['size' => 9, 'bold' => true,'indentation' => ['left' => 100] // Add left indentation
+        ], ['alignment' => 'left']);
 
-            // Account Details section
-            $cell->addText("Account Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
-            $accountDetailsTable = $cell->addTable('ContractTable');
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->executive_table ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
 
-            // Define column headings
-            // $accountDetailsTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Executive Chair:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->executive_chair ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Second Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Guest Chair:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->guest_chair ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Staff Workstations:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->staff_workstations ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Third Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Staff Chairs:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->staff_chairs ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Cabinet:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->cabinet ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Fourth Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Conference Room:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->conference_room ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Sofa:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->sofa ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Fifth Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Cleaning:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->cleaning ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Parking:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->parking ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Sixth Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Drinking Water:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->drinking_water ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Electricity:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->electricity ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            // Seventh Row
+            $packageTable->addRow();
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Internet:', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->internet ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText('Refreshment (Tea/Coffee):', ['size' => 9, 'bold' => true], ['alignment' => 'left']);
+
+            $packageTable->addCell(3000, [
+                'borderBottomSize' => 6,
+                'borderBottomColor' => '000000',
+                'borderRightSize' => 6,
+                'borderRightColor' => '000000'
+            ])->addText($building->refreshment_tea_coffee ?? '-', ['size' => 9, 'bold' => true], ['alignment' => 'center']);
 
 
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(2500, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
 
-            // // Calculate values
-            // $actualOfficeRent = $contract->actual_office_rent ?? 0;
-            // $discount = $contract->discount ?? 0;
-            // $netRent = $actualOfficeRent - $discount;
-
-            // $accountDetails = [
-            //     ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
-            //     ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
-            //     ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
-            //     ['VAT 5%', '-', '-', $contract->vat ?? '-'],
-            //     ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
-            //     ['Commission', '-', '-', $contract->commission ?? '-'],
-            //     ['Ejari', '-', '-', $contract->ejari ?? '-'],
-            // ];
-
-            // foreach ($accountDetails as $row) {
-            //     $accountDetailsTable->addRow();
-            //     foreach ($row as $key => $value) {
-            //         $alignment = $key === 0 ? ['alignment' => 'center'] : ['alignment' => 'center'];
-            //         $accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //             ->addText($value, ['size' => 9, 'bold'=> true], $alignment);
-            //     }
-            // }
-            // Define Account Details array before the loop
-$actualOfficeRent = $contract->actual_office_rent ?? 0;
-$discount = $contract->discount ?? 0;
-$netRent = $actualOfficeRent - $discount;
-
-$accountDetails = [
-    ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
-    ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
-    ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
-    ['VAT 5%', '-', '-', $contract->vat ?? '-'],
-    ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
-    ['Commission', '-', '-', $contract->commission ?? '-'],
-    ['Ejari', '-', '-', $contract->ejari ?? '-'],
-];
-
-// Define column headings
-$accountDetailsTable->addRow();
-
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12],);
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], );
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12],);
-$accountDetailsTable->addCell(2500, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], );
-
-// Add data rows with right borders
-foreach ($accountDetails as $row) {
-    $accountDetailsTable->addRow();
-    foreach ($row as $key => $value) {
-        $alignment = $key === 0 ? ['alignment' => 'left'] : ['alignment' => 'left'];
-        $accountDetailsTable->addCell(2000, [
-            'borderBottomSize' => 6,
-            'borderBottomColor' => '000000',
-            'borderRightSize' => 6,
-            'borderRightColor' => '000000',
-            'cellMarginLeft' => 200 // Add left padding
-        ])->addText($value, ['size' => 9, 'bold' => true], $alignment);
-    }
-}
 
 
             // Signature section with full width
@@ -323,42 +575,84 @@ foreach ($accountDetails as $row) {
         }
     }
 
-    private function addTableRowWithBottomBorder($table, ...$params)
-    {
-        $table->addRow(250);
+    // private function addTableRowWithBottomBorder($table, ...$params)
+    // {
+    //     $table->addRow(250);
 
-        $cellStyle = [
-            'borderBottomSize' => 6,
-            'borderBottomColor' => '000000',
-            'valign' => 'center',
-            'spaceAfter' => 0,
-            'spaceBefore' => 0,
-            'spacing' => 0,
-            'width' => 25,
-            'unit' => 'pct',
-        ];
+    //     $cellStyle = [
+    //         'borderBottomSize' => 6,
+    //         'borderBottomColor' => '000000',
+    //         'valign' => 'center',
+    //         'spaceAfter' => 0,
+    //         'spaceBefore' => 0,
+    //         'spacing' => 0,
+    //         'width' => 25,
+    //         'unit' => 'pct',
+    //     ];
 
-        $textStyle = [
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
-        ];
+    //     $textStyle = [
+    //         'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+    //     ];
 
-        $isPaymentTable = $params[0] === 'Date' || strtotime($params[0]) !== false;
+    //     $isPaymentTable = $params[0] === 'Date' || strtotime($params[0]) !== false;
 
-        if ($isPaymentTable) {
-            // All cells get equal width (25%) for payment table
-            foreach ($params as $value) {
-                $cell = $table->addCell(null, $cellStyle);
-                $cell->addText($value ?? '-', ['size' => 9, 'bold' => true], $textStyle);
-            }
-        } else {
-            // Two pairs of label-value cells, each pair gets 50% width
-            foreach (array_chunk($params, 2) as $pair) {
-                $labelCell = $table->addCell(null, $cellStyle);
-                $labelCell->addText($pair[0], ['bold' => true], $textStyle);
+    //     if ($isPaymentTable) {
+    //         // All cells get equal width (25%) for payment table
+    //         foreach ($params as $value) {
+    //             $cell = $table->addCell(null, $cellStyle);
+    //             $cell->addText($value ?? '-', ['size' => 9, 'bold' => true], $textStyle);
+    //         }
+    //     } else {
+    //         // Two pairs of label-value cells, each pair gets 50% width
+    //         foreach (array_chunk($params, 2) as $pair) {
+    //             $labelCell = $table->addCell(null, $cellStyle);
+    //             $labelCell->addText($pair[0], ['bold' => true], $textStyle);
 
-                $valueCell = $table->addCell(null, $cellStyle);
-                $valueCell->addText($pair[1], ['size' => 9, 'bold' => true], $textStyle);
-            }
-        }
-    }
+    //             $valueCell = $table->addCell(null, $cellStyle);
+    //             $valueCell->addText($pair[1], ['size' => 9, 'bold' => true], $textStyle);
+    //         }
+    //     }
+    // }
+    private function addTableRowWithBottomBorder($table, $label1, $value1, $label2, $value2)
+{
+    $row = $table->addRow();
+
+    // First column: Label
+$row->addCell(4000, [
+    'borderBottomSize' => 6,
+    'borderBottomColor' => '000000',
+    'borderRightSize' => 6, // Add right border
+    'borderRightColor' => '000000',
+    'valign' => 'center' // Vertical centering (Y-axis)
+])->addText($label1, ['bold' => true, 'size' => 10], [
+    'alignment' => 'left',
+    'indentation' => ['left' => 100] // Add left indentation
+]);
+
+
+    // First column: Value
+    $row->addCell(3000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6, // Add right border
+        'borderRightColor' => '000000'
+    ])->addText($value1, ['size' => 10], ['alignment' => 'left']);
+
+    // Second column: Label
+    $row->addCell(4000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6, // Add right border
+        'borderRightColor' => '000000'
+    ])->addText($label2, ['bold' => true, 'size' => 10], ['alignment' => 'left']);
+
+    // Second column: Value
+    $row->addCell(3000, [
+        'borderBottomSize' => 6,
+        'borderBottomColor' => '000000',
+        'borderRightSize' => 6, // Add right border
+        'borderRightColor' => '000000'
+    ])->addText($value2, ['size' => 10], ['alignment' => 'left']);
+}
+
 }
