@@ -15,25 +15,34 @@ class ContractController extends Controller
     public function viewContract($id)
 {
     $contract = Contract::with('tenant.dues')->findOrFail($id);
-    $building = $contract->apartment->building ?? (object) [
-        'executive_table' => '-',
-        'executive_chair' => '-',
-        'guest_chair' => '-',
-        'staff_workstations' => '-',
-        'staff_chairs' => '-',
-        'cabinet' => '-',
-        'conference_room' => '-',
-        'sofa' => '-',
-        'cleaning' => '-',
-        'parking' => '-',
-        'drinking_water' => '-',
-        'electricity' => '-',
-        'internet' => '-',
-    ];
+     $building = $contract->apartment->building ?? (object) [
+            'executive_table' => '-',
+            'executive_chair' => '-',
+            'guest_chair' => '-',
+            'staff_workstations' => '-',
+            'staff_chairs' => '-',
+            'cabinet' => '-',
+            'conference_room' => '-',
+            'sofa' => '-',
+            'cleaning' => '-',
+            'parking' => '-',
+            'drinking_water' => '-',
+            'electricity' => '-',
+            'internet' => '-',
+        ];
 
-    $contract->building = $building;
-    
+        $contract->building = $building;
+
     return view('livewire-components.admin.contracts.contract-download', compact('contract'));
 }
+public function printContract($id)
+{
+    // Get the contract from the database
+    $contract = Contract::findOrFail($id);
+
+    // Return the view for printing with the contract data
+    return view('contracts.print', compact('contract'));
+}
+
 
 }

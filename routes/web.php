@@ -24,7 +24,11 @@ Route::get('/contract-download/{id}', ContractDownloadController::class)
 // Route::get('/contract/{id}/download', ContractDownloadController::class);
 Route::get('/contract/{id}/view', [ContractController::class, 'viewContract'])->name('contract.view');
 
-
+// routes/web.php
+Route::get('/contract/download/{id}', [ContractController::class, 'DownloadContract'])->name('contract.print');
+Route::get('/contracts/{id}/word', [ContractController::class, 'generateWordContract'])->name('contracts.word');
+//word doc route to download
+Route::get('/download-contract', [ContractController::class, 'downloadContract'])->name('contract-download');
 
 Route::view('/', 'frontend.home')->name('home');
 
@@ -43,7 +47,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     });
 
     Route::get('contracts/{contract}', [ContractController::class, 'show'])->name('contracts.show');
-    
+
     Route::get('dues/{due}', [DueController::class, 'show'])->name('dues.show');
 
     Route::group(["prefix" => "users", "as" => "users.",], function () {

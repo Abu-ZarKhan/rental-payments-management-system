@@ -52,7 +52,7 @@ class ContractDownloadController extends Controller
             //     'unit' => 'pct',
             // ];
             $headerTableStyle = [
-
+               
                 'cellMarginLeft' => 200,  // Padding left
                 'cellMarginRight' => 200, // Padding right
                 'cellMarginTop' => 100,   // Padding top
@@ -65,17 +65,17 @@ class ContractDownloadController extends Controller
             // Create inner table for header content
             $headerTable = $cell->addTable('HeaderTable');
             $headerTable->addRow();
-
+            
             // Left cell for company details
             $leftCell = $headerTable->addCell(4000);
             $leftCell->addText("");
             $leftCell->addText("");
-
+            
             $leftCell->addText("XAVIER BUSINESS CENTER", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
             $leftCell->addText("27th Floor Al Saqar Tower,", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
             $leftCell->addText("Sheikh Zayed Road, Dubai", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
             $leftCell->addText("Trade Licence: 967319", ['bold' => true, 'size' => 10, 'color' => '#000'], ['alignment' => 'left']);
-
+           
             // $cell->addTextBreak(1);
 
             // Right cell for logo
@@ -83,15 +83,15 @@ class ContractDownloadController extends Controller
             $rightCell->addImage(
                 public_path('images/xavier-logo.png'),
                 [
-                    'width' => 100,
-                    'height' => 70,
-                    'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT
+                    'width' => 100,   
+                    'height' => 70,   
+                    'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT 
                 ]
             );
-
+            
             // Define table style for contact details
 $contactTableStyle = [
-
+    
     'cellMarginLeft' => 200,  // Padding left
     'cellMarginRight' => 20, // Padding right
     'cellMarginTop' => 100,   // Padding top
@@ -129,21 +129,21 @@ $contactCell->addText(
                 'cellMargin' => 0,
             ];
             $phpWord->addTableStyle('ContractTable', $contractTableStyle);
-
+            
             $contractTable = $cell->addTable('ContractTable');
-                $this->addTableRowWithBottomBorder($contractTable, 'Company Name:', $contract->company, 'Landlord Name:', $contract->landlord_name);
-                $this->addTableRowWithBottomBorder($contractTable, 'Land Location:', $contract->land_location, 'Location:', $contract->location);
-                $this->addTableRowWithBottomBorder($contractTable, 'Tenant Name:', $contract->tenant->name, 'Trade License:', $contract->trade_license);
-                $this->addTableRowWithBottomBorder($contractTable, 'Nationality:', $contract->nationality, 'EID No:', $contract->eid_no);
-                $this->addTableRowWithBottomBorder($contractTable, 'Contract Start:', $contract->start_date, 'Contract End:', $contract->end_date);
-                $this->addTableRowWithBottomBorder(
-                $contractTable,
-                'Ejari:',
-                $contract->ejari >= 0 ? 'Yes' : 'No',
-                'Contact No:',
+            $this->addTableRowWithBottomBorder($contractTable, 'Company Name:', $contract->company, 'Landlord Name:', $contract->landlord_name);
+            $this->addTableRowWithBottomBorder($contractTable, 'Land Location:', $contract->land_location, 'Location:', $contract->location);
+            $this->addTableRowWithBottomBorder($contractTable, 'Tenant Name:', $contract->tenant->name, 'Trade License:', $contract->trade_license);
+            $this->addTableRowWithBottomBorder($contractTable, 'Nationality:', $contract->nationality, 'EID No:', $contract->eid_no);
+            $this->addTableRowWithBottomBorder($contractTable, 'Contract Start:', $contract->start_date, 'Contract End:', $contract->end_date);
+            $this->addTableRowWithBottomBorder(
+                $contractTable, 
+                'Ejari:', 
+                $contract->ejari >= 0 ? 'Yes' : 'No', 
+                'Contact No:', 
                 $contract->contact_no
             );
-
+            
             // Payment Details section
             $cell->addText("Payment Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
             $paymentTable = $cell->addTable('ContractTable');
@@ -162,7 +162,7 @@ $contactCell->addText(
             // Package Details section
             $cell->addText("Package Details", ['bold' => true, 'size' => 14], ['alignment' => 'center', 'shading' => ['fill' => '1F3864']]);
             $packageTable = $cell->addTable('ContractTable');
-
+            
             $building = $contract->apartment->building;
             if (!$building) {
                 $building = (object)[
@@ -197,99 +197,41 @@ $contactCell->addText(
             $accountDetailsTable = $cell->addTable('ContractTable');
 
             // Define column headings
-            // $accountDetailsTable->addRow();
+            $accountDetailsTable->addRow();
+            
 
+            $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+                ->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+            $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+                ->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+            $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+                ->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+            $accountDetailsTable->addCell(2500, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+                ->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
 
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(3000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
-            // $accountDetailsTable->addCell(2500, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //     ->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], ['alignment' => 'center']);
+            // Calculate values
+            $actualOfficeRent = $contract->actual_office_rent ?? 0;
+            $discount = $contract->discount ?? 0;
+            $netRent = $actualOfficeRent - $discount;
 
-            // // Calculate values
-            // $actualOfficeRent = $contract->actual_office_rent ?? 0;
-            // $discount = $contract->discount ?? 0;
-            // $netRent = $actualOfficeRent - $discount;
+            $accountDetails = [
+                ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
+                ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
+                ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
+                ['VAT 5%', '-', '-', $contract->vat ?? '-'],
+                ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
+                ['Commission', '-', '-', $contract->commission ?? '-'],
+                ['Ejari', '-', '-', $contract->ejari ?? '-'],
+            ];
 
-            // $accountDetails = [
-            //     ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
-            //     ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
-            //     ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
-            //     ['VAT 5%', '-', '-', $contract->vat ?? '-'],
-            //     ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
-            //     ['Commission', '-', '-', $contract->commission ?? '-'],
-            //     ['Ejari', '-', '-', $contract->ejari ?? '-'],
-            // ];
-
-            // foreach ($accountDetails as $row) {
-            //     $accountDetailsTable->addRow();
-            //     foreach ($row as $key => $value) {
-            //         $alignment = $key === 0 ? ['alignment' => 'center'] : ['alignment' => 'center'];
-            //         $accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
-            //             ->addText($value, ['size' => 9, 'bold'=> true], $alignment);
-            //     }
-            // }
-            // Define Account Details array before the loop
-$actualOfficeRent = $contract->actual_office_rent ?? 0;
-$discount = $contract->discount ?? 0;
-$netRent = $actualOfficeRent - $discount;
-
-$accountDetails = [
-    ['Actual Office Rent', $actualOfficeRent, $discount, $netRent],
-    ['Admin Fee', '-', '-', $contract->admin_fee ?? '-'],
-    ['Security Deposit', '-', '-', $contract->security_deposit ?? '-'],
-    ['VAT 5%', '-', '-', $contract->vat ?? '-'],
-    ['Parking Card Fee', '-', '-', $contract->parking_card_fee ?? '-'],
-    ['Commission', '-', '-', $contract->commission ?? '-'],
-    ['Ejari', '-', '-', $contract->ejari ?? '-'],
-];
-
-// Define column headings
-$accountDetailsTable->addRow();
-
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Particulars', ['bold' => true, 'color' => '000000', 'size' => 12],);
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Rent Amount', ['bold' => true, 'color' => '000000', 'size' => 12], );
-$accountDetailsTable->addCell(3000, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Discount / Wave', ['bold' => true, 'color' => '000000', 'size' => 12],);
-$accountDetailsTable->addCell(2500, [
-    'borderBottomSize' => 6,
-    'borderBottomColor' => '000000',
-    'borderRightSize' => 6,
-    'borderRightColor' => '000000'
-])->addText('Net Amount', ['bold' => true, 'color' => '000000', 'size' => 12], );
-
-// Add data rows with right borders
-foreach ($accountDetails as $row) {
-    $accountDetailsTable->addRow();
-    foreach ($row as $key => $value) {
-        $alignment = $key === 0 ? ['alignment' => 'left'] : ['alignment' => 'left'];
-        $accountDetailsTable->addCell(2000, [
-            'borderBottomSize' => 6,
-            'borderBottomColor' => '000000',
-            'borderRightSize' => 6,
-            'borderRightColor' => '000000',
-            'cellMarginLeft' => 200 // Add left padding
-        ])->addText($value, ['size' => 9, 'bold' => true], $alignment);
-    }
-}
-
+            foreach ($accountDetails as $row) {
+                $accountDetailsTable->addRow();
+                foreach ($row as $key => $value) {
+                    $alignment = $key === 0 ? ['alignment' => 'center'] : ['alignment' => 'center'];
+                    $accountDetailsTable->addCell(2000, ['borderBottomSize' => 6, 'borderBottomColor' => '000000'])
+                        ->addText($value, ['size' => 9, 'bold'=> true], $alignment);
+                }
+            }
 
             // Signature section with full width
             $signatureTableStyle = [
@@ -298,10 +240,10 @@ foreach ($accountDetails as $row) {
                 'cellMargin' => 0,
             ];
             $phpWord->addTableStyle('SignatureTable', $signatureTableStyle);
-
+            
             $signatureTable = $cell->addTable('SignatureTable');
             $signatureTable->addRow();
-
+            
             $tenantCell = $signatureTable->addCell(null, ['width' => 50, 'unit' => 'pct']);
             $tenantCell->addText("Tenant Signature / Stamp", ['bold' => true, 'size' => 10], ['alignment' => 'center']);
             $tenantCell->addText("-----------------------", [], ['alignment' => 'center']);
@@ -355,7 +297,7 @@ foreach ($accountDetails as $row) {
             foreach (array_chunk($params, 2) as $pair) {
                 $labelCell = $table->addCell(null, $cellStyle);
                 $labelCell->addText($pair[0], ['bold' => true], $textStyle);
-
+                
                 $valueCell = $table->addCell(null, $cellStyle);
                 $valueCell->addText($pair[1], ['size' => 9, 'bold' => true], $textStyle);
             }
